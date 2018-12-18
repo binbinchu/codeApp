@@ -25,11 +25,18 @@
       }
     },
     {
+      "path": "pages/search/search",
+      "config": {
+        "navigationBarTitleText": "搜索"
+      }
+    },
+    {
       "path": "packageA/logs",
       "subPackage": true
     }
   ],
   "window": {
+    "enablePullDownRefresh": true,
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
@@ -54,7 +61,7 @@
     "i-row": "../../static/iview/row/index",
     "i-col": "../../static/iview/col/index",
     "i-tag": "../../static/iview/tag/index",
-    "i-input":"../../static/iview/input/index"
+    "i-input": "../../static/iview/input/index"
   },
   "tabBar": {
     "color": "#202020",

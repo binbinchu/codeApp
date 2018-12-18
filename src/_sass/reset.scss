@@ -1,3 +1,10 @@
 @function rpx($px) {
   @return $px/1*1rpx
 }
+
+body, html {
+  min-width: rpx(300);
+  height: rpx(750);
+  font-family: 'Helvetica Neue', Arial, Verdana, Sans-serif;
+  color: #666;
+}
