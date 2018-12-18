@@ -1,7 +1,7 @@
 <template>
   <div class="container" @click="clickHandle('test click', $event)">
     <div class="search">
-      <i-input type="number" left title="搜索" mode="wrapped" i-class="index-inputStyle" v-on:focus="toSearch"/>
+      <i-input type="text" left title="搜索" mode="wrapped" i-class="index-inputStyle" v-on:focus="toSearch"/>
     </div>
     <div class="swiper">
       <swiper
