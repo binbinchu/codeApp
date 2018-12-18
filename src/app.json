@@ -53,7 +53,8 @@
     "i-grid-label": "../../static/iview/grid-label/index",
     "i-row": "../../static/iview/row/index",
     "i-col": "../../static/iview/col/index",
-    "i-tag": "../../static/iview/tag/index"
+    "i-tag": "../../static/iview/tag/index",
+    "i-input":"../../static/iview/input/index"
   },
   "tabBar": {
     "color": "#202020",
