@@ -16,7 +16,7 @@
   @import "./_sass/reset";
 
   page {
-    height: 100%;
+    height: 100% !important;
     background: #f1f1f1;
   }
 
