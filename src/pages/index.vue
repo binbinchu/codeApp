@@ -17,7 +17,7 @@
       </swiper>
     </div>
     <div class="section tags">
-      公告：这是一条测试公告
+      公告：这是一条测试公告我是孙旭 提交git
     </div>
     <div class="section shopping-div quick-buy">
       <div class="shopping-more quick-buy-more">
