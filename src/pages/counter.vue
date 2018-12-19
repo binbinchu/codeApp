@@ -1,9 +1,8 @@
 <template>
-  <!-- <div class="counter-warp"> -->
+  <div class="counter-warp">
     <i-row>
       <i-col span="6" i-class="col-class">
         <i-cell-group>
-          <!-- <i-cell title="全部"></i-cell> -->
           <block v-for="(item,index) in classify0" :key="index">
             <i-cell
               :title="item.name"
@@ -31,14 +30,11 @@
         </i-row>
       </i-col>
     </i-row>
-  <!-- </div> -->
+  </div>
 </template>
 
 <script>
 export default {
-  config: {
-    navigationBarTitleText: "商品分类"
-  }, // 这个可以不在这写
   data() {
     return {
       // init
@@ -106,10 +102,9 @@ export default {
     getAllClassifiesNeqZero() {
       new Promise((resolve, reject) => {
         this.$ajax
-          .getAllClassify({ sum:99 })
+          .getAllClassify({ num:99 })
           .then(({ data }) => {
-            // resolve(data);
-            console.log(data)
+            // console.log(data)
             this.childClassifies = data
           })
           .catch(e => {
@@ -121,10 +116,15 @@ export default {
 };
 </script>
 <style>
+/* @import "../../src/_sass/reset"; */
 .counter-warp {
-  background-color: #fff;
+  background-color: #ffffff !important;
   text-align: center;
   /* margin-top: 10px; */
+}
+.left-list{
+  /* background-color: #f1f1f1 !important; */
+  height: 100%;
 }
 .item-border {
   border: none !important;
