@@ -2,11 +2,19 @@
   <div class="search">
     <div class="search-first">
       <div class="search-left-box">
-        <i-input type="text" left mode="wrapped" i-class="search-input"></i-input>
+        <i-input type="text" left mode="wrapped" i-class="search-input" maxlength="100" @change="changeFn"></i-input>
         <i-icon type="search" color="#666666" i-class="search-icon-search" size="26"></i-icon>
       </div>
       <div class="search-right-box">
-        <i-button type="error" i-class="search-btn">搜索</i-button>
+        <i-button type="error" i-class="search-btn" v-on:click="toSearch">搜索</i-button>
+      </div>
+    </div>
+    <div class="section search-second">
+      <div class="hot-search">
+        <div class="hot-search-type">历史搜索</div>
+      </div>
+      <div class="hot-search-content">
+        <div class="content-item" v-for="(item,index) in historyItemData">{{item}}</div>
       </div>
     </div>
     <div class="section search-second">
@@ -14,6 +22,12 @@
         <div class="hot-search-type">热门搜索</div>
         <div class="hot-search-btn">换一批</div>
       </div>
+      <div class="hot-search-content">
+        <div class="content-item" v-for="(item,index) in itemData">{{item}}</div>
+      </div>
+    </div>
+    <div class="search-list-mask">
+
     </div>
   </div>
 </template>
@@ -21,7 +35,35 @@
 <script>
   export default {
     name: 'search',
-    methods: {}
+    data () {
+      return {
+        searchValue: '',
+        itemData: ['电脑', '手机', '家电', '护肤品', '婴儿用品', '男人装', '女人装', '旅游', '优惠券', '去哪儿了', '我在这儿'],
+        historyItemData: ['去哪儿了', '我在这儿'],
+        searchList: []
+      }
+    },
+    methods: {
+      // request:search
+      requestSearch (val) {
+        const obj = {
+          key_word: val,
+          goodsClass: '10'
+        }
+        this.$ajax.loadSearch(obj).then((res) => {
+          if (res.ret == 200) {
+            this.searchList = res.data
+          }
+        })
+      },
+      toSearch () {
+        this.requestSearch(this.searchValue)
+      },
+      changeFn (e) {
+        this.searchValue = e.mp.detail.detail.value
+        this.requestSearch(this.searchValue)
+      }
+    }
   }
 </script>
 <style lang="scss">
@@ -85,6 +127,18 @@
       .hot-search-btn {
         color: #ed3f14;
         font-size: rpx(25);
+      }
+    }
+    .hot-search-content {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: left;
+      .content-item {
+        padding: rpx(5) rpx(8);
+        font-size: rpx(24);
+        margin-bottom: rpx(15);
+        margin-right: rpx(15);
       }
     }
   }
