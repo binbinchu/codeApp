@@ -9,25 +9,31 @@
         <i-button type="error" i-class="search-btn" v-on:click="toSearch">搜索</i-button>
       </div>
     </div>
-    <div class="section search-second">
-      <div class="hot-search">
-        <div class="hot-search-type">历史搜索</div>
+    <div v-show="!resultFlage">
+      <div class="section search-second">
+        <div class="hot-search">
+          <div class="hot-search-type">历史搜索</div>
+        </div>
+        <div class="hot-search-content">
+          <div class="content-item" v-for="(item,index) in historyItemData" :key="index">{{item}}</div>
+        </div>
       </div>
-      <div class="hot-search-content">
-        <div class="content-item" v-for="(item,index) in historyItemData" :key="index">{{item}}</div>
+      <div class="section search-second">
+        <div class="hot-search">
+          <div class="hot-search-type">热门搜索</div>
+          <div class="hot-search-btn">换一批</div>
+        </div>
+        <div class="hot-search-content">
+          <div class="content-item" v-for="(item,index) in itemData" :key="index">{{item}}</div>
+        </div>
       </div>
     </div>
-    <div class="section search-second">
-      <div class="hot-search">
-        <div class="hot-search-type">热门搜索</div>
-        <div class="hot-search-btn">换一批</div>
+    <div v-show="resultFlage">
+      <div class="search-list-mask">
+        <ul>
+          <li class="result-list-item" v-for="(item,index) in searchList" :key="index">{{item.name}}</li>
+        </ul>
       </div>
-      <div class="hot-search-content">
-        <div class="content-item" v-for="(item,index) in itemData" :key="index">{{item}}</div>
-      </div>
-    </div>
-    <div class="search-list-mask">
-
     </div>
   </div>
 </template>
@@ -40,7 +46,8 @@
         searchValue: '',
         itemData: ['电脑', '手机', '家电', '护肤品', '婴儿用品', '男人装', '女人装', '旅游', '优惠券', '去哪儿了', '我在这儿'],
         historyItemData: ['去哪儿了', '我在这儿'],
-        searchList: []
+        searchList: [],
+        resultFlage: false
       }
     },
     methods: {
@@ -53,6 +60,13 @@
         this.$ajax.loadSearch(obj).then((res) => {
           if (res.ret === 200) {
             this.searchList = res.data
+            if (this.searchList.length > 0 && res.data.length > 0) {
+              this.resultFlage = true
+            } else {
+              this.resultFlage = false
+            }
+          } else {
+            this.resultFlage = false
           }
         })
       },
@@ -61,7 +75,12 @@
       },
       changeFn (e) {
         this.searchValue = e.mp.detail.detail.value
-        this.requestSearch(this.searchValue)
+        if (this.searchValue !== '') {
+          this.requestSearch(this.searchValue)
+        } else {
+          this.searchList = []
+          this.resultFlage = false
+        }
       }
     }
   }
@@ -140,6 +159,15 @@
         margin-bottom: rpx(15);
         margin-right: rpx(15);
       }
+    }
+  }
+
+  .search-list-mask {
+    .result-list-item {
+      padding: rpx(30) 0;
+      margin-left: rpx(15);
+      border-bottom: rpx(1) solid #DCDCDC;
+      font-size: rpx(28);
     }
   }
 </style>

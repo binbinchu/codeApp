@@ -1,6 +1,10 @@
 import _fly from './config'
 
 export default {
+  // 首页数据热品推荐
+  getHotGoods (data, config) {
+    return _fly.post(`Goods.getRecommendGoods`, data, config)
+  },
   // 获取省份
   getProvinceList (data, config) {
     return _fly.post(`Common.getProvinceList`, data, config)

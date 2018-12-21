@@ -1,7 +1,8 @@
 <template>
   <div class="container" @click="clickHandle('test click', $event)">
     <div class="search">
-      <i-input type="text" left title="搜索" mode="wrapped" i-class="index-inputStyle" v-on:focus="toSearch"/>
+      <i-input type="text" left title="搜索" mode="wrapped" i-class="index-inputStyle" disabled="true"
+               v-on:click="toSearch"/>
     </div>
     <div class="swiper">
       <swiper
@@ -11,7 +12,7 @@
         :duration="duration">
         <block v-for="(item,index) in imgUrls" :key="index">
           <swiper-item>
-            <image :src="item" class="slide-image"/>
+            <image :src="item" class="slide-image" lazy-load="true"/>
           </swiper-item>
         </block>
       </swiper>
@@ -26,13 +27,13 @@
       </div>
       <div class="shopping-list-image">
         <div class="shopping-image-box">
-          <img src="http://pic.58pic.com/58pic/14/21/42/32U58PICj6I_1024.jpg" alt="">
+          <image src="http://pic.58pic.com/58pic/14/21/42/32U58PICj6I_1024.jpg" alt=""/>
         </div>
         <div class="shopping-image-box">
-          <img src="http://pic2.ooopic.com/12/62/89/46bOOOPICa6_1024.jpg" alt="">
+          <image src="http://pic2.ooopic.com/12/62/89/46bOOOPICa6_1024.jpg" alt=""/>
         </div>
         <div class="shopping-image-box">
-          <img src="http://pic12.photophoto.cn/20090715/0020033073935424_b.jpg" alt="">
+          <image src="http://pic12.photophoto.cn/20090715/0020033073935424_b.jpg" alt=""/>
         </div>
       </div>
     </div>
@@ -54,12 +55,18 @@
       </div>
     </div>
     <div class="section shopping-div recommend">
-      <div class="recommend-item"></div>
-      <div class="recommend-item"></div>
-      <div class="recommend-item"></div>
-      <div class="recommend-item"></div>
-      <div class="recommend-item"></div>
-      <div class="recommend-item"></div>
+      <div class="recommend-item" v-for="(item,index) in hotGoodsData" :key="index">
+        <div class="goods-image">
+          <img :src="item.img_list" alt="">
+        </div>
+        <div class="goods-info">
+          <div class="goods-name">{{item.name}}</div>
+          <div class="goods-price">
+            <div class="rmb">¥</div>
+            <div class="price">{{item.price}}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -78,7 +85,8 @@
         indicatorDots: false,
         autoplay: true,
         interval: 5000,
-        duration: 1000
+        duration: 1000,
+        hotGoodsData: []
       }
     },
 
@@ -106,6 +114,17 @@
           }
         })
       },
+      getHotGoods () {
+        const obj = {
+          page: 1,
+          pageSize: 6
+        }
+        this.$ajax.getHotGoods(obj).then((res) => {
+          if (res.ret === 200) {
+            this.hotGoodsData = res.data
+          }
+        })
+      },
       clickHandle (msg, ev) {
         // eslint-disable-next-line
         console.log('clickHandle:', msg, ev)
@@ -115,6 +134,7 @@
     created () {
       // 调用应用实例的方法获取全局数据
       this.getUserInfo()
+      this.getHotGoods()
     }
   }
 </script>
@@ -162,6 +182,9 @@
     padding-left: rpx(20);
     padding-right: rpx(20);
     background: #ffffff;
+    &.recommend {
+      background: #f1f1f1;
+    }
     .shopping-more {
       width: 100%;
       display: flex;
@@ -189,7 +212,7 @@
         width: rpx(220);
         height: rpx(236);
         padding: rpx(15) 0 rpx(15) 0;
-        img {
+        image {
           width: 100%;
           height: 100%;
         }
@@ -207,10 +230,47 @@
     justify-content: space-between;
     flex-wrap: wrap;
     .recommend-item {
-      width: rpx(345);
-      height: rpx(236);
-      background: rgba(0, 0, 0, 0.5);
+      width: rpx(326);
+      background: rgba(255, 255, 255, 1);
       margin-bottom: rpx(1);
+      padding: rpx(15);
+    }
+    .goods-image {
+      width: rpx(325);
+      height: rpx(355);
+      image {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    }
+    .goods-info {
+      padding-top: rpx(15);
+      line-height: rpx(38);
+      .goods-name {
+        width: rpx(325);
+        font-size: rpx(26);
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        text-overflow: ellipsis;
+        word-break: break-all;
+      }
+      .goods-price {
+        display: flex;
+        justify-content: left;
+        align-items: flex-end;
+        align-content: flex-end;
+        color: #ed3f14;
+      }
+      .rmb {
+        font-size: rpx(22);
+      }
+      .price {
+        margin-left: rpx(5);
+        font-size: rpx(26);
+      }
     }
   }
 </style>

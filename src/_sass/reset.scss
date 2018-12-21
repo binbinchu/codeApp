@@ -1,3 +1,8 @@
+$color-border: #DCDCDC;
+$color-theme-bg:#f1f1f1;
+$color-theme-font:#202020;
+
+
 @function rpx($px) {
   @return $px/1*1rpx
 }
