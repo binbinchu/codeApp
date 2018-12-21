@@ -14,7 +14,7 @@
         <div class="hot-search-type">历史搜索</div>
       </div>
       <div class="hot-search-content">
-        <div class="content-item" v-for="(item,index) in historyItemData">{{item}}</div>
+        <div class="content-item" v-for="(item,index) in historyItemData" :key="index">{{item}}</div>
       </div>
     </div>
     <div class="section search-second">
@@ -23,7 +23,7 @@
         <div class="hot-search-btn">换一批</div>
       </div>
       <div class="hot-search-content">
-        <div class="content-item" v-for="(item,index) in itemData">{{item}}</div>
+        <div class="content-item" v-for="(item,index) in itemData" :key="index">{{item}}</div>
       </div>
     </div>
     <div class="search-list-mask">
@@ -68,6 +68,7 @@
 </script>
 <style lang="scss">
   @import "../../../src/_sass/reset";
+
   .search-input {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -76,11 +77,13 @@
     border-radius: rpx(35);
     border: rpx(1) solid #f1f1f1;
   }
+
   .search-icon-search {
     position: absolute;
     top: rpx(30);
     left: rpx(50);
   }
+
   .search-btn {
     margin: 0 !important;
     border-radius: rpx(15) !important;
@@ -91,6 +94,7 @@
 
 <style scoped lang="scss">
   @import "../../../src/_sass/reset";
+
   .search-first {
     display: flex;
     justify-content: space-between;
@@ -106,6 +110,7 @@
       padding-right: rpx(30);
     }
   }
+
   .search-second {
     padding-left: rpx(30);
     padding-right: rpx(30);
