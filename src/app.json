@@ -31,6 +31,12 @@
       }
     },
     {
+      "path": "pages/classify/classify",
+      "config": {
+        "navigationBarTitleText": "分类"
+      }
+    },
+    {
       "path": "packageA/logs",
       "subPackage": true
     }
@@ -74,10 +80,16 @@
         "selectedIconPath": "/static/common/app-home_selected.png"
       },
       {
-        "pagePath": "pages/counter",
+        "pagePath": "pages/classify/classify",
         "text": "分类",
         "iconPath": "/static/common/app-type.png",
         "selectedIconPath": "/static/common/app-type_selected.png"
+      },
+      {
+        "pagePath": "pages/account/account",
+        "text": "我的",
+        "iconPath": "/static/common/app-account.png",
+        "selectedIconPath": "/static/common/app-account_selected.png"
       }
     ]
   }

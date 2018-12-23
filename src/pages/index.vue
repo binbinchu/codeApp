@@ -17,6 +17,16 @@
         </block>
       </swiper>
     </div>
+    <div class="index-menu-tags">
+      <div class="tags-item" v-for="(item,index) in tagsMenu" :key="index">
+        <div class="tags-image">
+          <img :src="item.img" alt="">
+        </div>
+        <div class="tags-name">
+          {{item.name}}
+        </div>
+      </div>
+    </div>
     <div class="section tags">
       公告：这是一条测试公告我是孙旭 提交git
     </div>
@@ -86,12 +96,18 @@
         autoplay: true,
         interval: 5000,
         duration: 1000,
-        hotGoodsData: []
+        hotGoodsData: [],
+        tagsMenu: []
       }
     },
 
     components: {},
-
+    created () {
+      // 调用应用实例的方法获取全局数据
+      this.getUserInfo()
+      this.getHotGoods()
+      this.getIndexMenu()
+    },
     methods: {
       toSearch () {
         wx.navigateTo({
@@ -125,16 +141,17 @@
           }
         })
       },
+      getIndexMenu () {
+        this.$ajax.getMenuTags().then((res) => {
+          if (res.ret === 200) {
+            this.tagsMenu = res.data
+          }
+        })
+      },
       clickHandle (msg, ev) {
         // eslint-disable-next-line
         console.log('clickHandle:', msg, ev)
       }
-    },
-
-    created () {
-      // 调用应用实例的方法获取全局数据
-      this.getUserInfo()
-      this.getHotGoods()
     }
   }
 </script>
@@ -176,6 +193,34 @@
     line-height: rpx(68);
     color: #959595;
     font-size: rpx(26);
+  }
+
+  .index-menu-tags {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    flex-wrap: wrap;
+    .tags-item {
+      width: rpx(120);
+      padding: rpx(15);
+      .tags-image {
+        width: rpx(120);
+        height: rpx(120);
+        image {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+      }
+      .tags-name {
+        width: rpx(120);
+        margin-top: rpx(15);
+        font-size: rpx(26);
+        text-align: center;
+      }
+    }
   }
 
   .shopping-div {
