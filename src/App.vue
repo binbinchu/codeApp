@@ -37,4 +37,25 @@
     margin-top: rpx(20);
     display: block;
   }
+
+  .price {
+    display: flex;
+    align-items: flex-end;
+    align-content: flex-end;
+    justify-content: left;
+    margin-top: rpx(14);
+    &.new-price {
+      color: #ed3f14;
+    }
+    &.old-price {
+      text-decoration: line-through;
+    }
+    .symbol {
+      font-size: rpx(24);
+    }
+    .number {
+      margin-left: rpx(8);
+      font-size: rpx(32);
+    }
+  }
 </style>

@@ -14,6 +14,7 @@
     name: 'account',
     methods: {
       getUserInfo (e) {
+        console.log(e)
         console.log(e.mp.detail.userInfo)
       }
     }

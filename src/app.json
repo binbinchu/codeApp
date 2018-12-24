@@ -37,6 +37,12 @@
       }
     },
     {
+      "path": "pages/shopping/detail",
+      "config": {
+        "navigationBarTitleText": "商品详情"
+      }
+    },
+    {
       "path": "packageA/logs",
       "subPackage": true
     }

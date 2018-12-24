@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="section shopping-div recommend">
-      <div class="recommend-item" v-for="(item,index) in hotGoodsData" :key="index">
+      <div class="recommend-item" v-for="(item,index) in hotGoodsData" :key="index" v-on:click="toDetail(item)">
         <div class="goods-image">
           <img :src="item.img_list" alt="">
         </div>
@@ -112,6 +112,14 @@
       toSearch () {
         wx.navigateTo({
           url: '/pages/search/search'
+        })
+      },
+      toDetail (item) {
+        this.$router.push({
+          path: '/pages/shopping/detail',
+          query: {
+            goodsId: item.id
+          }
         })
       },
       bindViewTap () {
