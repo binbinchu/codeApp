@@ -309,6 +309,7 @@
         -webkit-line-clamp: 2;
         text-overflow: ellipsis;
         word-break: break-all;
+        height: rpx(70);
       }
       .goods-price {
         display: flex;

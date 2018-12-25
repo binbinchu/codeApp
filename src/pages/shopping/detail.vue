@@ -47,7 +47,18 @@
       </div>
     </div>
     <div class="detail-fourth">
-
+      <div class="Icon enter-shore" :class="{'activity':selectedNum === '1'}" id="1" data-id="1"
+           v-on:click="IconSelectedFn">
+        <i-icon type="shop_fill" size="32"/>
+        <div class="text">进店</div>
+      </div>
+      <div class="Icon shopping-cart" :class="{'activity':selectedNum === '2'}" id="2" data-id="2"
+           v-on:click="IconSelectedFn">
+        <i-icon type="publishgoods_fill" size="32"/>
+        <div class="text">购物车</div>
+      </div>
+      <i-button shape="circle" i-class="BTN shopping-cart-btn" v-on:click="addCart">加入购物车</i-button>
+      <i-button type="error" shape="circle" i-class="BTN buy-btn" v-on:click="Buy">立即购买</i-button>
     </div>
   </div>
 </template>
@@ -61,7 +72,8 @@
         autoplay: true,
         interval: 5000,
         duration: 1000,
-        goodsData: {}
+        goodsData: {},
+        selectedNum: ''
       }
     },
     components: {},
@@ -81,11 +93,23 @@
             this.goodsData = res.data
           }
         })
+      },
+      addCart () {
+        console.log('添加购物车')
+      },
+      Buy () {
+        console.log('立即购买')
+      },
+      IconSelectedFn (e) {
+        this.selectedNum = e.mp.currentTarget.id
+        // 1进店 2进购物车
       }
     }
   }
 </script>
-
+<style lang="scss">
+  @import '../../_sass/reset';
+</style>
 <style scoped lang="scss">
   @import '../../_sass/reset';
 
@@ -122,6 +146,15 @@
       margin-top: rpx(15);
       @include two-wrap;
     }
+    .detail-goods-price {
+      display: flex;
+      justify-content: left;
+      align-content: flex-end;
+      align-items: flex-end;
+      .old-price {
+        margin-left: rpx(15);
+      }
+    }
     .detail-sale-city {
       font-size: rpx(24);
       display: flex;
@@ -150,6 +183,18 @@
     }
   }
 
+  .Icon {
+    color: #80848f;
+    font-size: rpx(32);
+    text-align: center;
+    &.activity {
+      color: #ed3f14;
+    }
+    .text {
+      font-size: rpx(28);
+    }
+  }
+
   .detail-fourth {
     bottom: rpx(0);
     position: fixed;
@@ -164,5 +209,11 @@
     align-items: center;
     align-content: center;
     justify-content: space-between;
+    .enter-shore {
+      width: rpx(96);
+    }
+    .shopping-cart {
+      width: rpx(96);
+    }
   }
 </style>

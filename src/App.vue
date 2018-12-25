@@ -38,6 +38,7 @@
     display: block;
   }
 
+  // 价格 组合css
   .price {
     display: flex;
     align-items: flex-end;
@@ -57,5 +58,25 @@
       margin-left: rpx(8);
       font-size: rpx(32);
     }
+  }
+
+  // i-button 覆盖样式
+  .BTN {
+    width: rpx(260) !important;
+    height: rpx(68) !important;
+    border-radius: rpx(36) !important;
+    margin: 0 !important;
+    height: rpx(68) !important;
+    line-height: rpx(68) !important;
+    // -购物车
+    &.shopping-cart-btn {
+      color: #ffffff !important;
+      background: #FF6600 !important;
+    }
+    &.buy-btn {
+      color: #ffffff !important;
+      background: #FF0000 !important;
+    }
+
   }
 </style>
