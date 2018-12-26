@@ -10,9 +10,9 @@
         :indicator-dots="indicatorDots"
         :interval="interval"
         :duration="duration">
-        <block v-for="(item,index) in imgUrls" :key="index">
+        <block v-for="(item,index) in swiperImg" :key="index">
           <swiper-item>
-            <image :src="item" class="slide-image" lazy-load="true"/>
+            <image :src="item.img_url" class="slide-image" lazy-load="true"/>
           </swiper-item>
         </block>
       </swiper>
@@ -92,10 +92,11 @@
           'http://pic2.ooopic.com/12/62/89/46bOOOPICa6_1024.jpg',
           'http://pic12.photophoto.cn/20090715/0020033073935424_b.jpg'
         ],
-        indicatorDots: false,
+        indicatorDots: true,
         autoplay: true,
         interval: 5000,
         duration: 1000,
+        swiperImg: [],
         hotGoodsData: [],
         tagsMenu: []
       }
@@ -105,6 +106,7 @@
     created () {
       // 调用应用实例的方法获取全局数据
       this.getUserInfo()
+      this.getBanner()
       this.getHotGoods()
       this.getIndexMenu()
     },
@@ -135,6 +137,13 @@
                 this.userInfo = res.userInfo
               }
             })
+          }
+        })
+      },
+      getBanner () {
+        this.$ajax.getBannerTop().then((res) => {
+          if (res.ret === 200) {
+            this.swiperImg = res.data
           }
         })
       },

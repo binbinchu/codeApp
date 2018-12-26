@@ -5,6 +5,10 @@ export default {
   loadSearch (data, config) {
     return _fly.post(`Goods.getSearchName`, data, config)
   },
+  // 首页轮播
+  getBannerTop (data, config) {
+    return _fly.post(`Widget.getWidgetBanner`, data, config)
+  },
   // 首页数据热品推荐
   getHotGoods (data, config) {
     return _fly.post(`Goods.getRecommendGoods`, data, config)

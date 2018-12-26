@@ -39,6 +39,9 @@
         </div>
       </div>
     </div>
+    <div class="goods-specification">
+      <i-button v-on:click="handleOpen5">异步操作</i-button>
+    </div>
     <div class="detail-third">
       <div class="detail-third-title">商品详情</div>
       <div class="detail-third-content">
@@ -60,10 +63,16 @@
       <i-button shape="circle" i-class="BTN shopping-cart-btn" v-on:click="addCart">加入购物车</i-button>
       <i-button type="error" shape="circle" i-class="BTN buy-btn" v-on:click="Buy">立即购买</i-button>
     </div>
+    <i-toast id="toast"/>
+    <i-modal title="删除确认" :visible="visible5" :actions="actions5" v-on:click="handleClick5">
+      <view>删除后无法恢复哦</view>
+    </i-modal>
   </div>
 </template>
 
 <script>
+  import { $Toast } from '../../../static/iview/base/index'
+
   export default {
     name: 'detail',
     data () {
@@ -73,7 +82,19 @@
         interval: 5000,
         duration: 1000,
         goodsData: {},
-        selectedNum: ''
+        count: 1,
+        selectedNum: '',
+        visible5: false,
+        actions5: [
+          {
+            name: '取消'
+          },
+          {
+            name: '删除',
+            color: '#ed3f14',
+            loading: false
+          }
+        ]
       }
     },
     components: {},
@@ -84,6 +105,13 @@
     created () {
     },
     methods: {
+      handleOpen5 () {
+        this.visible5 = true
+      },
+      handleClick5 () {
+        console.log('确认删除')
+        this.visible5 = false
+      },
       getGoodsData (id) {
         const obj = {
           id: id
@@ -95,14 +123,29 @@
         })
       },
       addCart () {
+        this.toastFn('您已添加购物车~')
         console.log('添加购物车')
       },
       Buy () {
         console.log('立即购买')
       },
+      goodsCount (e) {
+        this.count = e.mp.detail.value
+      },
       IconSelectedFn (e) {
-        this.selectedNum = e.mp.currentTarget.id
         // 1进店 2进购物车
+        this.selectedNum = e.mp.currentTarget.id
+        let type = parseInt(this.selectedNum)
+        if (type === 1) {
+          console.log('进店')
+        } else if (type === 2) {
+          console.log('购物车')
+        }
+      },
+      toastFn (text) {
+        $Toast({
+          content: text
+        })
       }
     }
   }
@@ -125,6 +168,12 @@
       width: 100%;
       height: 100%;
     }
+  }
+
+  .line-gray {
+    background: $color-theme-bg;
+    width: rpx(720);
+    height: rpx(15);
   }
 
   .detail-second {
@@ -165,6 +214,14 @@
         margin-right: rpx(30);
       }
     }
+    .detail-goods-num {
+      margin: rpx(15) 0;
+    }
+  }
+
+  .goods-specification {
+    margin-top: rpx(15);
+    margin-bottom: rpx(15);
   }
 
   .detail-third {

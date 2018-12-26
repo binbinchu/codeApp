@@ -1,10 +1,41 @@
-$color-border: #DCDCDC;
-$color-theme-bg: #f1f1f1;
-$color-theme-font: #202020;
-
 @function rpx($px) {
   @return $px/1*1rpx
 }
+
+$color-border: #DCDCDC;
+$color-theme-bg: #f1f1f1;
+$color-theme-font: #202020;
+/** 常用色值 **/
+$colorA: #f9c700;
+$colorB: #ff5400;
+$colorC: #333;
+$colorD: #6699cc;
+$colorE: #9cb3c5;
+$colorF: #e0e6ec;
+$colorG: #666;
+$colorH: #999;
+$colorI: #ccc;
+$colorJ: #d7d7d7;
+$colorK: #e3e3e3;
+$colorL: #f1f3f5;
+$colorM: #fff;
+$colorN: #e5e5e5;
+$colorO: #afafaf;
+$colorP: #ff8605;
+$colorQ: #f9fbfc;
+$colorR: #001529;
+$colorS: #002140;
+$colorT: #232526;
+$colorU: #bebebe;
+
+/** 常用字体大小 **/
+$fontA: rpx(34);
+$fontB: rpx(22);
+$fontC: rpx(18);
+$fontD: rpx(16);
+$fontE: rpx(14);
+$fontF: rpx(12);
+$fontG: rpx(20);
 
 @mixin two-wrap {
   overflow: hidden;

@@ -31,6 +31,12 @@
       }
     },
     {
+      "path": "pages/shopping/shoppingCart",
+      "config": {
+        "navigationBarTitleText": "购物车"
+      }
+    },
+    {
       "path": "pages/classify/classify",
       "config": {
         "navigationBarTitleText": "分类"
@@ -73,7 +79,11 @@
     "i-row": "../../static/iview/row/index",
     "i-col": "../../static/iview/col/index",
     "i-tag": "../../static/iview/tag/index",
-    "i-input": "../../static/iview/input/index"
+    "i-input": "../../static/iview/input/index",
+    "i-input-number": "../../static/iview/input-number/index",
+    "i-swipeout": "../../static/iview/swipeout/index",
+    "i-action-sheet": "../../static/iview/action-sheet/index",
+    "i-modal": "../../static/iview/modal/index"
   },
   "tabBar": {
     "color": "#202020",
@@ -90,6 +100,12 @@
         "text": "分类",
         "iconPath": "/static/common/app-type.png",
         "selectedIconPath": "/static/common/app-type_selected.png"
+      },
+      {
+        "pagePath": "pages/shopping/shoppingCart",
+        "text": "购物车",
+        "iconPath": "/static/common/app-shopping.png",
+        "selectedIconPath": "/static/common/app-shopping_selected.png"
       },
       {
         "pagePath": "pages/account/account",
