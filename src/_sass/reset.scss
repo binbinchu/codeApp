@@ -30,12 +30,13 @@ $colorU: #bebebe;
 
 /** 常用字体大小 **/
 $fontA: rpx(34);
-$fontB: rpx(22);
-$fontC: rpx(18);
-$fontD: rpx(16);
-$fontE: rpx(14);
-$fontF: rpx(12);
-$fontG: rpx(20);
+$fontB: rpx(24);
+$fontC: rpx(22);
+$fontD: rpx(20);
+$fontE: rpx(18);
+$fontF: rpx(16);
+$fontG: rpx(14);
+$fontH: rpx(12);
 
 @mixin two-wrap {
   overflow: hidden;

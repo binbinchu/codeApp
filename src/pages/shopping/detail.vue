@@ -39,8 +39,13 @@
         </div>
       </div>
     </div>
-    <div class="goods-specification">
-      <i-button v-on:click="handleOpen5">异步操作</i-button>
+    <div class="goods-specification" v-on:click="handleOpen">
+      <div class="specification-text">
+        已选&nbsp;&nbsp;{{goodsData.name}}，{{count}}个
+      </div>
+      <div class="specification-symbol">
+        <i-icon type="switch" size="24"></i-icon>
+      </div>
     </div>
     <div class="detail-third">
       <div class="detail-third-title">商品详情</div>
@@ -64,9 +69,37 @@
       <i-button type="error" shape="circle" i-class="BTN buy-btn" v-on:click="Buy">立即购买</i-button>
     </div>
     <i-toast id="toast"/>
-    <i-modal title="删除确认" :visible="visible5" :actions="actions5" v-on:click="handleClick5">
-      <view>删除后无法恢复哦</view>
-    </i-modal>
+    <i-action-sheet :visible="visible">
+      <div slot="header" class="tip-content">
+        <i-icon type="close" i-class="action-close" @click="handleCancel"></i-icon>
+        <div class="goods-info">
+          <div class="info-image">
+            <img :src="smBanner" alt="">
+          </div>
+          <div class="info-specification">
+            <div class="price new-price">
+              <div class="symbol">￥</div>
+              <div class="number">{{goodsData.price}}</div>
+            </div>
+            <div class="specification-text">
+              已选&nbsp;&nbsp;{{goodsData.name}}，{{count}}个
+            </div>
+          </div>
+        </div>
+        <div class="goods-choose">
+          <div class="chooseView number">
+            <div class="title">数量</div>
+            <div class="tab-item">
+              <i-input-number :value="count" min="1" max="100" step="1" @change="goodsCount"></i-input-number>
+            </div>
+          </div>
+        </div>
+        <div class="goods-btn">
+          <i-button i-class="action-btn shopping-cart-btn">加入购物车</i-button>
+          <i-button i-class="action-btn buy-btn">立即购买</i-button>
+        </div>
+      </div>
+    </i-action-sheet>
   </div>
 </template>
 
@@ -82,19 +115,10 @@
         interval: 5000,
         duration: 1000,
         goodsData: {},
+        smBanner: '',
         count: 1,
         selectedNum: '',
-        visible5: false,
-        actions5: [
-          {
-            name: '取消'
-          },
-          {
-            name: '删除',
-            color: '#ed3f14',
-            loading: false
-          }
-        ]
+        visible: false
       }
     },
     components: {},
@@ -105,12 +129,11 @@
     created () {
     },
     methods: {
-      handleOpen5 () {
-        this.visible5 = true
+      handleOpen () {
+        this.visible = true
       },
-      handleClick5 () {
-        console.log('确认删除')
-        this.visible5 = false
+      handleCancel () {
+        this.visible = false
       },
       getGoodsData (id) {
         const obj = {
@@ -119,6 +142,7 @@
         this.$ajax.getGoodsDetail(obj).then((res) => {
           if (res.ret === 200) {
             this.goodsData = res.data
+            this.smBanner = res.data.banner[0]
           }
         })
       },
@@ -152,6 +176,21 @@
 </script>
 <style lang="scss">
   @import '../../_sass/reset';
+
+  .action-close {
+    position: absolute;
+    width: rpx(48);
+    height: rpx(48);
+    font-size: rpx(48) !important;
+    top: rpx(15);
+    right: rpx(15);
+  }
+
+  .action-btn {
+    margin: 0 !important;
+    width: rpx(360);
+    border: none;
+  }
 </style>
 <style scoped lang="scss">
   @import '../../_sass/reset';
@@ -174,6 +213,54 @@
     background: $color-theme-bg;
     width: rpx(720);
     height: rpx(15);
+  }
+
+  .tip-content {
+    position: relative;
+    padding-left: rpx(15);
+    padding-right: rpx(15);
+    background: $colorM;
+    width: rpx(720);
+    padding-top: rpx(125);
+    .goods-info {
+      display: flex;
+      align-content: flex-end;
+      align-items: flex-end;
+      justify-content: left;
+      position: absolute;
+      top: rpx(-80);
+    }
+    .info-image {
+      width: rpx(160);
+      height: rpx(160);
+      padding: rpx(15);
+      background: $colorM;
+      image {
+        width: rpx(160);
+        height: rpx(160);
+        display: block;
+      }
+    }
+    .info-specification {
+      margin-left: rpx(15);
+      padding-bottom: rpx(15);
+    }
+    .goods-choose {
+      padding-top: rpx(45);
+      padding-bottom: rpx(50);
+      border-top: rpx(1) solid $color-theme-bg;
+      .chooseView {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+        padding: rpx(0) rpx(15) rpx(0) rpx(15);
+      }
+    }
+    .goods-btn {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .detail-second {
@@ -222,6 +309,17 @@
   .goods-specification {
     margin-top: rpx(15);
     margin-bottom: rpx(15);
+    padding: rpx(25) rpx(15) rpx(25) rpx(15);
+    background: $colorM;
+    font-size: $fontB;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    .specification-text {
+    }
+    .specification-symbol {
+    }
   }
 
   .detail-third {
