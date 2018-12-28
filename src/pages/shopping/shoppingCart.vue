@@ -53,16 +53,7 @@
         index: 0,
         goodsList: [],
         modalOption: {},
-        actions: [
-          {
-            name: '取消'
-          },
-          {
-            name: '删除',
-            color: '#ed3f14',
-            loading: false
-          }
-        ],
+        actions: [],
         actionMode: 'horizontal'
       }
     },
@@ -98,10 +89,13 @@
       },
       actionsTap () {
         this.modalOption = {}
+        this.actions = []
         this.modalOption = Object.assign({}, this.modalOption, {
-          title: '确认删除',
+          title: '确定',
+          body: '确定从购物车删除该商品吗？',
           clickEvent: this.deleteFn
         })
+        this.actions.push({ name: '取消' }, { name: '删除', color: '#ed3f14', loading: false })
         this.visible = true
       },
       loadShoppingCart () {
@@ -114,7 +108,6 @@
     }
   }
 </script>
-
 <style scoped lang="scss">
   @import "../../_sass/reset";
 
@@ -152,10 +145,11 @@
       align-items: center;
       align-content: center;
       justify-content: left;
+      padding: rpx(15);
     }
     .goods-info-img {
-      width: rpx(114);
-      height: rpx(114);
+      width: rpx(160);
+      height: rpx(160);
       image {
         width: 100%;
         height: 100%;

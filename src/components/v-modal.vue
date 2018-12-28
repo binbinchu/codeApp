@@ -5,12 +5,15 @@
       <div class="i-modal-main">
         <div class="i-modal-content">
           <div class="i-modal-title" v-if="modalOption.title">{{ modalOption.title }}</div>
+          <div class="i-modal-body" v-if="modalOption.body">
+            {{modalOption.body}}
+          </div>
           <div class="i-modal-actions" v-if="actions && actions.length">
             <div v-if="actionMode === 'horizontal' ">
               <i-grid i-class="i-modal-grid">
                 <i-grid-item
                   :class="actions.length === (index + 1) ? 'i-modal-grid-item-last' : 'i-modal-grid-item' "
-                  v-for="(item,index) in actions" :key="item.name ">
+                  v-for="(item,index) in actions" :key="item.name" i-class="i-grid-item-cart">
                   <i-button long type="ghost" :data-index="index" v-on:click.stop="handleClickItem">
                     <view class="i-modal-btn-loading" v-if="item.loading"></view>
                     <i-icon v-if="item.icon" :type="item.icon" i-class="i-modal-btn-icon"></i-icon>
@@ -94,7 +97,7 @@
         const { index } = dataset
         if (index === 0) {
           this.handleClickCancel()
-        } else {
+        } else if (index === 1) {
           this.modalOption.clickEvent()
         }
       },
@@ -105,7 +108,11 @@
     }
   }
 </script>
-
+<style lang="scss">
+  .i-grid-item-cart {
+    padding: 0 !important;
+  }
+</style>
 <style scoped lang="scss">
   @import "../_sass/reset";
 
@@ -124,7 +131,7 @@
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
-    transform: translateZ(1px);
+    transform: translateZ(rpx(1));
     opacity: 0;
     visibility: hidden
   }
@@ -153,13 +160,13 @@
   }
 
   .i-modal-main {
-    width: 270px;
+    width: rpx(589);
     position: relative
   }
 
   .i-modal-content {
-    border-radius: 7px;
-    padding-top: 15px;
+    border-radius: rpx(7);
+    padding-top: rpx(15);
     position: relative;
     background-color: #fff;
     border: 0;
@@ -170,9 +177,9 @@
   }
 
   .i-modal-body {
-    max-height: 100px;
-    margin-bottom: 15px;
-    font-size: 14px;
+    max-height: rpx(100);
+    margin-bottom: rpx(15);
+    font-size: $fontB;
     color: #80848f;
     height: 100%;
     line-height: 1.5;
@@ -180,16 +187,16 @@
   }
 
   .i-modal-title {
-    padding: 6px 15px 15px;
+    padding: rpx(6) rpx(15) rpx(15);
     margin: 0;
-    font-size: 18px;
+    font-size: $fontA;
     line-height: 1;
     color: #1c2438;
     text-align: center
   }
 
   .i-modal-actions {
-    margin: 0 1px
+    margin: 0 rpx(1)
   }
 
   .i-modal-action-vertical {
@@ -208,11 +215,11 @@
     pointer-events: none;
     box-sizing: border-box;
     border: 0 solid #e9eaec;
-    border-top-width: 1px
+    border-top-width: rpx(1)
   }
 
   .i-modal-grid {
-    border-radius: 0 0 7px 7px;
+    border-radius: 0 0 rpx(7) rpx(7);
     border-left: none
   }
 
@@ -232,12 +239,12 @@
   .i-modal-btn-loading {
     display: inline-block;
     vertical-align: middle;
-    margin-right: 10px;
-    width: 12px;
-    height: 12px;
+    margin-right: rpx(10);
+    width: rpx(12);
+    height: rpx(12);
     background: 0 0;
     border-radius: 50%;
-    border: 2px solid #e5e5e5;
+    border: rpx(2) solid #e5e5e5;
     border-color: #666 #e5e5e5 #e5e5e5 #e5e5e5;
     animation: btn-spin .6s linear;
     animation-iteration-count: infinite
@@ -249,8 +256,8 @@
   }
 
   .i-modal-btn-icon {
-    font-size: 14px !important;
-    margin-right: 4px
+    font-size: rpx(14) !important;
+    margin-right: rpx(4)
   }
 
   @keyframes btn-spin {
