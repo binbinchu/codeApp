@@ -52,9 +52,7 @@
         toggleFlag: false,
         index: 0,
         goodsList: [],
-        modalOption: {
-          title: '确认'
-        },
+        modalOption: {},
         actions: [
           {
             name: '取消'
@@ -99,7 +97,9 @@
         this.visible = false
       },
       actionsTap () {
+        this.modalOption = {}
         this.modalOption = Object.assign({}, this.modalOption, {
+          title: '确认删除',
           clickEvent: this.deleteFn
         })
         this.visible = true
