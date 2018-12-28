@@ -8,5 +8,9 @@ export default {
   // 加入购物车
   addShoppingCart (data, config) {
     return _fly.post(`ShoppingCar.addGoodsToCar`, data, config)
+  },
+  // 购物车列表
+  shoppingCartList (data, config) {
+    return _fly.post(`ShoppingCar.getMyGoodsCar`, data, config)
   }
 }

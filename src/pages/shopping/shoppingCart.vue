@@ -5,15 +5,22 @@
     </div>
     <div class="cart-second">
       <ul class="cart-list">
-        <li class="cart-list-item">
+        <li class="cart-list-item" v-for="(item,index) in goodsList" :key="index">
           <i-swipeout operateWidth="75" :unclosable="unclosable" :toggle="toggleFlag">
             <div slot="content">
               <div class="goods-info">
-                <div class="goods-info-img"></div>
+                <div class="goods-info-img">
+                  <img :src="item.goods_info.img" alt="">
+                </div>
                 <div class="goods-info-s">
-                  <div class="goods-name"></div>
-                  <div class="goods-price"></div>
-                  <div class="goods-num"></div>
+                  <div class="goods-name">{{item.goods_info.name}}</div>
+                  <div class="goods-price">
+                    <div class="price new-price">
+                      <div class="symbol">￥</div>
+                      <div class="number">{{item.piece}}</div>
+                    </div>
+                  </div>
+                  <div class="goods-num">{{item.num}}</div>
                 </div>
               </div>
             </div>
@@ -24,20 +31,16 @@
             </div>
           </i-swipeout>
         </li>
-        <i-action-sheet :visible="visible" @click.stop="handleCancel">
-          <div slot="header">
-            <view>确定吗？</view>
-            <text>删除后无法恢复哦</text>
-            <i-button i-class="i-as-btn-text" @click.stop="deleteFn">删除</i-button>
-          </div>
-        </i-action-sheet>
       </ul>
     </div>
+    <v-modal v-if="visible" :visible="visible" :modalOption="modalOption" :actions="actions"
+             :actionMode="actionMode" @click="handleClickCancel"></v-modal>
   </div>
 </template>
 
 <script>
   import { $Toast } from '../../../static/iview/base/index'
+  import vModal from '../../components/v-modal'
 
   export default {
     name: 'shoppingCart',
@@ -47,17 +50,25 @@
         visible: false,
         unclosable: true,
         toggleFlag: false,
+        index: 0,
+        goodsList: [],
+        modalOption: {
+          title: '确认'
+        },
         actions: [
           {
+            name: '取消'
+          },
+          {
             name: '删除',
-            color: '#ed3f14'
+            color: '#ed3f14',
+            loading: false
           }
         ],
-        startX: 0,
-        endX: 0,
-        index: 0
+        actionMode: 'horizontal'
       }
     },
+    components: { vModal },
     computed: {
       editorText () {
         if (!this.editorFlag) {
@@ -66,6 +77,9 @@
           return '完成'
         }
       }
+    },
+    onShow () {
+      this.loadShoppingCart()
     },
     methods: {
       changeEd () {
@@ -80,12 +94,22 @@
         // 删除操作
         console.log('删除')
       },
-      handleCancel () {
+      handleClickCancel () {
         this.toggleFlag = true
         this.visible = false
       },
       actionsTap () {
+        this.modalOption = Object.assign({}, this.modalOption, {
+          clickEvent: this.deleteFn
+        })
         this.visible = true
+      },
+      loadShoppingCart () {
+        this.$ajax.shoppingCartList().then((res) => {
+          if (res.code === 0) {
+            this.goodsList = res.data
+          }
+        })
       }
     }
   }
@@ -123,6 +147,32 @@
   }
 
   .cart-second {
+    .goods-info {
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: left;
+    }
+    .goods-info-img {
+      width: rpx(114);
+      height: rpx(114);
+      image {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    }
+    .goods-info-s {
+      margin-left: rpx(30);
+    }
+    .goods-name {
+      font-size: rpx(24);
+    }
+    .goods-price {
+      font-size: rpx(22);
+    }
+    .goods-num {
+    }
     .cart-list-item-delete {
       height: 100%;
       color: #fff;
@@ -131,32 +181,6 @@
       align-content: center;
       align-items: center;
       justify-content: center;
-      .goods-info {
-        display: flex;
-        align-items: center;
-        align-content: center;
-        justify-content: left;
-      }
-      .goods-info-img {
-        width: rpx(114);
-        height: rpx(114);
-        img {
-          width: 100%;
-          height: 100%;
-          display: block;
-        }
-      }
-      .goods-info-s {
-        margin-left: rpx(10);
-      }
-      .goods-name {
-        font-size: rpx(24);
-      }
-      .goods-price {
-        font-size: rpx(22);
-      }
-      .goods-num {
-      }
     }
   }
 </style>

@@ -1,7 +1,22 @@
 import Fly from 'flyio/dist/npm/wx'
 
 const fly = new Fly()
-const host = 'http://58.56.21.246:88'
+let _URL_
+if (process.env.NODE_ENV === 'testing') {
+  _URL_ = 'http://58.56.21.246:88'
+
+// 开发
+} else if (process.env.NODE_ENV === 'development') {
+  // 开发
+  _URL_ = 'http://58.56.21.246:88'
+
+// 正式
+} else if (process.env.NODE_ENV === 'production') {
+  _URL_ = ''
+}
+const host = _URL_
+
+console.log(process.env.NODE_ENV)
 // 添加请求拦截器
 fly.interceptors.request.use((request) => {
   wx.showLoading({

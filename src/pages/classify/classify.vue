@@ -46,7 +46,7 @@
           pid: 0
         }
         this.$ajax.getClassifyList(obj).then((res) => {
-          if (res.ret === 200) {
+          if (res.code === 0) {
             this.leftList = res.data
             this.goodsClass = this.leftList[0].id
             this.getShoppingRight()
@@ -58,7 +58,7 @@
           pid: this.goodsClass
         }
         this.$ajax.getClassifyList(obj).then((res) => {
-          if (res.ret === 200) {
+          if (res.code === 0) {
             this.rightList = []
             this.rightList = res.data
           }
@@ -121,11 +121,11 @@
           width: rpx(120);
           height: rpx(150);
           display: block;
-          margin:0 auto;
+          margin: 0 auto;
         }
       }
       .item-info {
-        margin-top:rpx(15);
+        margin-top: rpx(15);
         font-size: rpx(28);
         text-align: center;
       }

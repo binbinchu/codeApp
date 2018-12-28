@@ -68,7 +68,6 @@
       <i-button shape="circle" i-class="BTN shopping-cart-btn" v-on:click="addCart">加入购物车</i-button>
       <i-button type="error" shape="circle" i-class="BTN buy-btn" v-on:click="Buy">立即购买</i-button>
     </div>
-    <i-toast id="toast"/>
     <i-action-sheet :visible="visible">
       <div slot="header" class="tip-content">
         <i-icon type="close" i-class="action-close" @click="handleCancel"></i-icon>
@@ -95,16 +94,18 @@
           </div>
         </div>
         <div class="goods-btn">
-          <i-button i-class="action-btn shopping-cart-btn">加入购物车</i-button>
+          <i-button i-class="action-btn shopping-cart-btn" v-on:click="addCart">加入购物车</i-button>
           <i-button i-class="action-btn buy-btn">立即购买</i-button>
         </div>
       </div>
     </i-action-sheet>
+    <i-toast id="toast"/>
+    <i-message id="message"/>
   </div>
 </template>
 
 <script>
-  import { $Toast } from '../../../static/iview/base/index'
+  import { $Toast, $Message } from '../../../static/iview/base/index'
 
   export default {
     name: 'detail',
@@ -140,15 +141,28 @@
           id: id
         }
         this.$ajax.getGoodsDetail(obj).then((res) => {
-          if (res.ret === 200) {
+          if (res.code === 0) {
             this.goodsData = res.data
             this.smBanner = res.data.banner[0]
           }
         })
       },
       addCart () {
-        this.toastFn('您已添加购物车~')
-        console.log('添加购物车')
+        const obj = {
+          goods_id: this.$route.query.goodsId,
+          num: this.count,
+          piece: this.goodsData.price
+        }
+        this.$ajax.addShoppingCart(obj).then((res) => {
+          if (res.code === 0) {
+            this.messageFn('您已添加购物车~', 'success')
+            if (this.visible) {
+              this.visible = !this.visible
+            } else {
+              console.log('加入失败')
+            }
+          }
+        })
       },
       Buy () {
         console.log('立即购买')
@@ -169,6 +183,12 @@
       toastFn (text) {
         $Toast({
           content: text
+        })
+      },
+      messageFn (text, type) {
+        $Message({
+          content: text,
+          type: type
         })
       }
     }

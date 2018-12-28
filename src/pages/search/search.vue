@@ -58,7 +58,7 @@
           goodsClass: '10'
         }
         this.$ajax.loadSearch(obj).then((res) => {
-          if (res.ret === 200) {
+          if (res.code === 0) {
             this.searchList = res.data
             if (this.searchList.length > 0 && res.data.length > 0) {
               this.resultFlage = true

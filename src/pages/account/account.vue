@@ -4,7 +4,7 @@
       授权
     </button>
     <button open-type="getUserInfo" lang="zh_CN" @getuserinfo="getUserInfo">
-      获取用户信息
+     登录
     </button>
   </div>
 </template>
@@ -13,9 +13,19 @@
   export default {
     name: 'account',
     methods: {
+      ToLogin () {
+        wx.login({
+          success (res) {
+            console.log(res)
+          }
+        })
+      },
       getUserInfo (e) {
-        console.log(e)
-        console.log(e.mp.detail.userInfo)
+        wx.getUserInfo({
+          success (res) {
+            console.log(res)
+          }
+        })
       }
     }
   }

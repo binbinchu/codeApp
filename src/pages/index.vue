@@ -37,12 +37,6 @@
       </div>
       <div class="shopping-list-image">
         <div class="shopping-image-box">
-          <image src="http://pic.58pic.com/58pic/14/21/42/32U58PICj6I_1024.jpg" alt=""/>
-        </div>
-        <div class="shopping-image-box">
-          <image src="http://pic2.ooopic.com/12/62/89/46bOOOPICa6_1024.jpg" alt=""/>
-        </div>
-        <div class="shopping-image-box">
           <image src="http://pic12.photophoto.cn/20090715/0020033073935424_b.jpg" alt=""/>
         </div>
       </div>
@@ -53,12 +47,6 @@
         <div class="more">更多</div>
       </div>
       <div class="shopping-list-image">
-        <div class="shopping-image-box">
-          <img src="http://pic.58pic.com/58pic/14/21/42/32U58PICj6I_1024.jpg" alt="">
-        </div>
-        <div class="shopping-image-box">
-          <img src="http://pic2.ooopic.com/12/62/89/46bOOOPICa6_1024.jpg" alt="">
-        </div>
         <div class="shopping-image-box">
           <img src="http://pic12.photophoto.cn/20090715/0020033073935424_b.jpg" alt="">
         </div>
@@ -142,7 +130,7 @@
       },
       getBanner () {
         this.$ajax.getBannerTop().then((res) => {
-          if (res.ret === 200) {
+          if (res.code === 0) {
             this.swiperImg = res.data
           }
         })
@@ -153,14 +141,14 @@
           pageSize: 6
         }
         this.$ajax.getHotGoods(obj).then((res) => {
-          if (res.ret === 200) {
+          if (res.code === 0) {
             this.hotGoodsData = res.data
           }
         })
       },
       getIndexMenu () {
         this.$ajax.getMenuTags().then((res) => {
-          if (res.ret === 200) {
+          if (res.code === 0) {
             this.tagsMenu = res.data
           }
         })
