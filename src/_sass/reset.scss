@@ -47,6 +47,13 @@ $fontH: rpx(12);
   word-break: break-all;
 }
 
+.radiusBox {
+  width: 96%;
+  margin:0 auto;
+  margin-top: rpx(15);
+  border-radius: rpx(20);
+}
+
 body, html {
   min-width: rpx(300);
   height: rpx(750);

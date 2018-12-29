@@ -17,7 +17,7 @@
         </block>
       </swiper>
     </div>
-    <div class="index-menu-tags">
+    <div class="index-menu-tags radiusBox">
       <div class="tags-item" v-for="(item,index) in tagsMenu" :key="index">
         <div class="tags-image">
           <img :src="item.img" alt="">
@@ -27,10 +27,10 @@
         </div>
       </div>
     </div>
-    <div class="section tags">
-      公告：这是一条测试公告我是孙旭 提交git
+    <div class="section tags radiusBox">
+      公告：这是一条测试公告
     </div>
-    <div class="section shopping-div quick-buy">
+    <div class="section shopping-div quick-buy radiusBox">
       <div class="shopping-more quick-buy-more">
         <div class="shopping-type-title">抢购</div>
         <div class="more">更多</div>
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div class="section shopping-div group-buy">
+    <div class="section shopping-div group-buy radiusBox">
       <div class="shopping-more quick-buy-more">
         <div class="shopping-type-title">拼团</div>
         <div class="more">更多</div>
@@ -51,6 +51,9 @@
           <img src="http://pic12.photophoto.cn/20090715/0020033073935424_b.jpg" alt="">
         </div>
       </div>
+    </div>
+    <div class="reco-font">
+      — 推荐商品 —
     </div>
     <div class="section shopping-div recommend">
       <div class="recommend-item" v-for="(item,index) in hotGoodsData" :key="index" v-on:click="toDetail(item)">
@@ -71,6 +74,9 @@
 
 <script>
   export default {
+    config: {
+      navigationBarTitleText: '个人中心'
+    },
     data () {
       return {
         motto: 'Hello World',
@@ -194,7 +200,7 @@
     background: #ffffff;
     height: rpx(68);
     padding-left: rpx(20);
-    padding-right: rpx(20);
+    /*padding-right: rpx(20);*/
     line-height: rpx(68);
     color: #959595;
     font-size: rpx(26);
@@ -207,12 +213,13 @@
     justify-content: space-between;
     background: #ffffff;
     flex-wrap: wrap;
+    padding:rpx(10);
     .tags-item {
-      width: rpx(120);
+      width: rpx(100);
       padding: rpx(15);
       .tags-image {
-        width: rpx(120);
-        height: rpx(120);
+        width: rpx(100);
+        height: rpx(100);
         image {
           width: 100%;
           height: 100%;
@@ -220,7 +227,7 @@
         }
       }
       .tags-name {
-        width: rpx(120);
+        width: rpx(100);
         margin-top: rpx(15);
         font-size: rpx(26);
         text-align: center;
@@ -236,7 +243,7 @@
       background: #f1f1f1;
     }
     .shopping-more {
-      width: 100%;
+      width: 98%;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -269,7 +276,19 @@
       }
     }
   }
-
+  .reco-font{
+    margin-top: rpx(20);
+    text-align: center;
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-variant-east-asian: normal;
+    font-stretch: normal;
+    font-size: rpx(45);
+    font-weight: normal;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+  }
   .recommend {
     padding-top: rpx(15);
     padding-bottom: rpx(15);
@@ -279,6 +298,7 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+
     .recommend-item {
       width: rpx(326);
       background: rgba(255, 255, 255, 1);

@@ -92,10 +92,12 @@
       width: rpx(200);
       .left-item {
         text-align: center;
-        font-size: rpx(32);
-        padding: rpx(15);
+        font-size: rpx(28);
+        padding: rpx(25);
         &.leftActive {
           background: #ffffff;
+          font-size: rpx(30);
+          color:red;
         }
       }
     }
@@ -118,15 +120,15 @@
         width: rpx(153);
         text-align: center;
         image {
-          width: rpx(120);
-          height: rpx(150);
+          width: rpx(100);
+          height: rpx(100);
           display: block;
           margin: 0 auto;
         }
       }
       .item-info {
         margin-top: rpx(15);
-        font-size: rpx(28);
+        font-size: rpx(30);
         text-align: center;
       }
     }
