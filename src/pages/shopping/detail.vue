@@ -124,7 +124,8 @@
     },
     components: {},
     onShow () {
-      console.log(this.$route)
+      this.selectedNum = 0
+      console.log(this.$route.query.goodsId)
       this.getGoodsData(this.$route.query.goodsId)
     },
     created () {
@@ -158,8 +159,6 @@
             this.messageFn('您已添加购物车~', 'success')
             if (this.visible) {
               this.visible = !this.visible
-            } else {
-              console.log('加入失败')
             }
           }
         })
@@ -177,7 +176,9 @@
         if (type === 1) {
           console.log('进店')
         } else if (type === 2) {
-          console.log('购物车')
+          wx.switchTab({
+            url: '/pages/shopping/shoppingCart'
+          })
         }
       },
       toastFn (text) {

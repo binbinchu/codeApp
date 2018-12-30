@@ -5,7 +5,7 @@
     </div>
     <div class="cart-second">
       <ul class="cart-list">
-        <li class="cart-list-item" v-for="(item,index) in goodsList" :key="index">
+        <li class="cart-list-item" v-for="(item,index) in goodsList" :key="index" @click.stop="toDetail(item)">
           <i-swipeout operateWidth="75" :unclosable="unclosable" :toggle="toggleFlag">
             <div slot="content">
               <div class="goods-info">
@@ -20,7 +20,15 @@
                       <div class="number">{{item.piece}}</div>
                     </div>
                   </div>
-                  <div class="goods-num">{{item.num}}</div>
+                  <div class="goods-num">
+                    <div class="chooseView number">
+                      <div class="title">数量</div>
+                      <div class="tab-item">
+                        <i-input-number :value="item.num" min="1" max="100" step="1"
+                                        @change.stop="goodsCount($event,item)"></i-input-number>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -104,6 +112,17 @@
             this.goodsList = res.data
           }
         })
+      },
+      goodsCount (e, item) {
+        item.num = e.mp.detail.value
+      },
+      toDetail (item) {
+        this.$router.push({
+          path: '/pages/shopping/detail',
+          query: {
+            goodsId: item.id
+          }
+        })
       }
     }
   }
@@ -157,15 +176,31 @@
       }
     }
     .goods-info-s {
+      flex: 1;
       margin-left: rpx(30);
     }
     .goods-name {
       font-size: rpx(24);
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      text-overflow: ellipsis;
+      word-break: break-all;
+      height: rpx(70);
     }
     .goods-price {
       font-size: rpx(22);
     }
     .goods-num {
+      width: 100%;
+      .chooseView {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+        padding: rpx(0) rpx(15) rpx(0) rpx(15);
+      }
     }
     .cart-list-item-delete {
       height: 100%;
