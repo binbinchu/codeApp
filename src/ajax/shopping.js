@@ -12,5 +12,9 @@ export default {
   // 购物车列表
   shoppingCartList (data, config) {
     return _fly.post(`ShoppingCar.getMyGoodsCar`, data, config)
+  },
+  // 购物车状态更新
+  upDataTheCart (data, config) {
+    return _fly.post(`ShoppingCar.updateGoodsCar`, data, config)
   }
 }

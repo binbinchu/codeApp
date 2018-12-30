@@ -113,14 +113,23 @@
           }
         })
       },
+      upDataCart (item) {
+        const obj = {
+          goods_id: item.goods_info.id,
+          num: item.num
+        }
+        this.$ajax.upDataTheCart(obj).then((res) => {
+        })
+      },
       goodsCount (e, item) {
         item.num = e.mp.detail.value
+        this.upDataCart(item)
       },
       toDetail (item) {
         this.$router.push({
           path: '/pages/shopping/detail',
           query: {
-            goodsId: item.id
+            goodsId: item.goods_info.id
           }
         })
       }
