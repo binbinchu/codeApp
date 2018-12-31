@@ -19,16 +19,17 @@
                       <div class="symbol">￥</div>
                       <div class="number">{{item.piece}}</div>
                     </div>
-                  </div>
-                  <div class="goods-num">
-                    <div class="chooseView number">
-                      <div class="title">数量</div>
-                      <div class="tab-item">
-                        <i-input-number :value="item.num" min="1" max="100" step="1"
-                                        @change.stop="goodsCount($event,item)"></i-input-number>
+                    <div class="goods-num">
+                      <div class="chooseView number">
+                        <!--<div class="title">数量</div>-->
+                        <div class="tab-item">
+                          <i-input-number :value="item.num" min="1" max="100" step="1" size="small"
+                                          @change.stop="goodsCount($event,item)"></i-input-number>
+                        </div>
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -173,11 +174,11 @@
       align-items: center;
       align-content: center;
       justify-content: left;
-      padding: rpx(15);
+      padding: rpx(25);
     }
     .goods-info-img {
-      width: rpx(160);
-      height: rpx(160);
+      width: rpx(188);
+      height: rpx(188);
       image {
         width: 100%;
         height: 100%;
@@ -189,7 +190,8 @@
       margin-left: rpx(30);
     }
     .goods-name {
-      font-size: rpx(24);
+      font-size: rpx(35);
+      font-weight: bold;
       overflow: hidden;
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -199,18 +201,28 @@
       height: rpx(70);
     }
     .goods-price {
-      font-size: rpx(22);
-    }
-    .goods-num {
-      width: 100%;
-      .chooseView {
-        display: flex;
-        align-items: center;
-        align-content: center;
-        justify-content: space-between;
-        padding: rpx(0) rpx(15) rpx(0) rpx(15);
+      display: flex;
+      /*flex-direction: column;*/
+      .new-price{
+        flex: 1;
+        font-size: rpx(26);
+        padding-top: rpx(10)
+      }
+
+      .goods-num {
+        width: 90%;
+        flex:0;
+        padding-top:rpx(15);
+        .chooseView {
+          display: flex;
+          align-items: center;
+          align-content: center;
+          justify-content: space-between;
+          padding: rpx(0) rpx(15) rpx(0) rpx(15);
+        }
       }
     }
+
     .cart-list-item-delete {
       height: 100%;
       color: #fff;
