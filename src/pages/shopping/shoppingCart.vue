@@ -179,7 +179,7 @@
     .goods-info-img {
       width: rpx(188);
       height: rpx(188);
-      /* flex 是这么用么*/
+      /* flex 是这么用么 */
       image {
         width: 100%;
         height: 100%;
