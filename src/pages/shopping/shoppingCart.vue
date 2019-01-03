@@ -9,6 +9,7 @@
           <i-swipeout operateWidth="75" :unclosable="unclosable" :toggle="toggleFlag">
             <div slot="content">
               <div class="goods-info">
+                <div class="select" :class="{'active':item.selected}" v-on:click.stop="selectedFn(item)"></div>
                 <div class="goods-info-img">
                   <img :src="item.goods_info.img" alt="">
                 </div>
@@ -33,8 +34,8 @@
                 </div>
               </div>
             </div>
-            <div slot="button" class="cart-list-item-delete">
-              <div v-on:click="actionsTap">
+            <div slot="button" class="cart-list-item-delete" v-on:click.stop="actionsTap">
+              <div>
                 删除
               </div>
             </div>
@@ -111,6 +112,10 @@
         this.$ajax.shoppingCartList().then((res) => {
           if (res.code === 0) {
             this.goodsList = res.data
+            let that = this
+            this.goodsList.forEach((item, index) => {
+              that.$set(item, 'selected', false)
+            })
           }
         })
       },
@@ -133,6 +138,9 @@
             goodsId: item.goods_info.id
           }
         })
+      },
+      selectedFn (item) {
+        item.selected = true
       }
     }
   }
@@ -191,20 +199,22 @@
       margin-left: rpx(30);
     }
     .goods-name {
-      font-size: rpx(35);
-      font-weight: bold;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      text-overflow: ellipsis;
-      word-break: break-all;
+      width: rpx(385);
+      font-size: rpx(26);
       height: rpx(70);
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      white-space: normal;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+
     }
     .goods-price {
       display: flex;
       /*flex-direction: column;*/
-      .new-price{
+      .new-price {
         flex: 1;
         font-size: rpx(26);
         padding-top: rpx(10)
@@ -212,8 +222,8 @@
 
       .goods-num {
         width: 90%;
-        flex:0;
-        padding-top:rpx(15);
+        flex: 0;
+        padding-top: rpx(15);
         .chooseView {
           display: flex;
           align-items: center;
@@ -223,7 +233,22 @@
         }
       }
     }
-
+    .cart-list-item {
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      align-content: center;
+      .select {
+        width: rpx(100);
+        height: rpx(100);
+        background: url("../../../static/common/icon/icon-circle.png") no-repeat center;
+        background-size: 34% 34%;
+        &.active {
+          background: url("../../../static/common/icon/icon-circle-checked.png") no-repeat center;
+          background-size: 34% 34%;
+        }
+      }
+    }
     .cart-list-item-delete {
       height: 100%;
       color: #fff;
