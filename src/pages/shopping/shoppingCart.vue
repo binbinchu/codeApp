@@ -6,7 +6,7 @@
     <div class="cart-second">
       <ul class="cart-list">
         <li class="cart-list-item" v-for="(item,index) in goodsList" :key="index" @click.stop="toDetail(item)">
-          <i-swipeout operateWidth="75" :unclosable="unclosable" :toggle="toggleFlag">
+          <i-swipeout operateWidth="75" :toggle="item.toggleFlag">
             <div slot="content">
               <div class="goods-info">
                 <div class="select" :class="{'active':item.selected}" v-on:click.stop="selectedFn(item)"></div>
@@ -34,7 +34,7 @@
                 </div>
               </div>
             </div>
-            <div slot="button" class="cart-list-item-delete" v-on:click.stop="actionsTap">
+            <div slot="button" class="cart-list-item-delete" v-on:click.stop="actionsTap(item,index)">
               <div>
                 删除
               </div>
@@ -43,13 +43,17 @@
         </li>
       </ul>
     </div>
+    <div class="shoppingCart-footer">
+
+    </div>
     <v-modal v-if="visible" :visible="visible" :modalOption="modalOption" :actions="actions"
              :actionMode="actionMode" @click="handleClickCancel"></v-modal>
+    <i-message id="message"/>
   </div>
 </template>
 
 <script>
-  import { $Toast } from '../../../static/iview/base/index'
+  import { $Toast, $Message } from '../../../static/iview/base/index'
   import vModal from '../../components/v-modal'
 
   export default {
@@ -64,7 +68,11 @@
         goodsList: [],
         modalOption: {},
         actions: [],
-        actionMode: 'horizontal'
+        actionMode: 'horizontal',
+        deleteObj: {
+          deleteId: '',
+          index: null
+        }
       }
     },
     components: { vModal },
@@ -91,13 +99,36 @@
       },
       deleteFn () {
         // 删除操作
-        console.log('删除')
+        this.deleteLoad()
+      },
+      deleteLoad () {
+        let obj = {
+          id: this.deleteObj.deleteId
+        }
+        this.$ajax.deleteCarItem(obj).then((res) => {
+          if (res.code === 0) {
+            $Message({
+              content: '删除成功',
+              type: 'success'
+            })
+            this.goodsList.splice(this.deleteObj.index, 1)
+            this.goodsList[this.deleteObj.index].toggleFlag = true
+            this.visible = false
+          } else {
+            $Message({
+              content: '删除失败',
+              type: 'error'
+            })
+          }
+        })
       },
       handleClickCancel () {
-        this.toggleFlag = true
+        this.goodsList[this.deleteObj.index].toggleFlag = true
         this.visible = false
       },
-      actionsTap () {
+      actionsTap (item, index) {
+        this.deleteObj.deleteId = item.id
+        this.deleteObj.index = index
         this.modalOption = {}
         this.actions = []
         this.modalOption = Object.assign({}, this.modalOption, {
@@ -115,6 +146,8 @@
             let that = this
             this.goodsList.forEach((item, index) => {
               that.$set(item, 'selected', false)
+              that.$set(item, 'unclosable', true)
+              that.$set(item, 'toggleFlag', false)
             })
           }
         })
@@ -140,7 +173,7 @@
         })
       },
       selectedFn (item) {
-        item.selected = true
+        item.selected = !item.selected
       }
     }
   }

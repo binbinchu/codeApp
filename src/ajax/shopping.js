@@ -16,5 +16,9 @@ export default {
   // 购物车状态更新
   upDataTheCart (data, config) {
     return _fly.post(`ShoppingCar.updateGoodsCar`, data, config)
+  },
+  // 购物车删除
+  deleteCarItem (data, config) {
+    return _fly.post(`ShoppingCar.delGoodsCar`, data, config)
   }
 }
