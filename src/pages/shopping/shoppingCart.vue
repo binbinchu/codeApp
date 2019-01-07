@@ -43,8 +43,25 @@
         </li>
       </ul>
     </div>
-    <div class="shoppingCart-footer">
-
+    <div class="cart-third">
+      <template v-if="!editorFlag">
+        <div class="total-price">
+          <div class="price-title">总金额：</div>
+          <div class="price-num">￥{{selectedNum}}</div>
+        </div>
+        <div class="cart-btn" v-on:click="nextPay">
+          结算({{selectedList.length}})
+        </div>
+      </template>
+      <template v-else>
+        <div class="total-price">
+          <div class="select" :class="{'active':allSelect}" v-on:click.stop="allSelectFn"></div>
+          <div class="price-num">全选</div>
+        </div>
+        <div class="cart-btn" v-on:click="allDelete">
+          删除({{selectedList.length}})
+        </div>
+      </template>
     </div>
     <v-modal v-if="visible" :visible="visible" :modalOption="modalOption" :actions="actions"
              :actionMode="actionMode" @click="handleClickCancel"></v-modal>
@@ -66,23 +83,51 @@
         toggleFlag: false,
         index: 0,
         goodsList: [],
+        selectedList: [],
         modalOption: {},
         actions: [],
         actionMode: 'horizontal',
         deleteObj: {
           deleteId: '',
           index: null
-        }
+        },
+        allSelect: false,
+        allPrice: 0,
+        selectId: []
       }
     },
     components: { vModal },
     computed: {
       editorText () {
+        this.goodsList.forEach((item, index) => {
+          item.selected = false
+        })
+        this.selectedList = []
         if (!this.editorFlag) {
           return '编辑'
         } else {
           return '完成'
         }
+      },
+      selectedNum () {
+        let num = 0
+        this.selectedList.forEach((item, index) => {
+          num += this.selectedList[index].piece * this.selectedList[index].num
+        })
+        this.allPrice = num
+        return num
+      }
+    },
+    watch: {
+      'selectedList' (val) {
+        this.selectId = []
+        val.forEach((item, index) => {
+          this.selectId.push(item.id)
+        })
+        this.deleteObj.deleteId = this.selectId.join(',')
+      },
+      'deleteObj.deleteId' (val) {
+        console.log(val)
       }
     },
     onShow () {
@@ -100,6 +145,12 @@
       deleteFn () {
         // 删除操作
         this.deleteLoad()
+      },
+      nextPay () {
+        console.log('结算')
+      },
+      allDelete () {
+        console.log('删除')
       },
       deleteLoad () {
         let obj = {
@@ -173,7 +224,34 @@
         })
       },
       selectedFn (item) {
+        this.selectedList.forEach((item, index) => {
+          item.selected = false
+        })
         item.selected = !item.selected
+        this.selectedList = []
+        if (item.selected) {
+          this.selectedList.push(item)
+        } else {
+          this.selectedList.forEach((_item, _index) => {
+            if (_item.id === item.id) {
+              this.selectedList.splice(_index, 1)
+            }
+          })
+        }
+      },
+      allSelectFn () {
+        this.allSelect = !this.allSelect
+        if (this.allSelect) {
+          this.selectedList = this.goodsList
+          this.goodsList.forEach((item, index) => {
+            item.selected = true
+          })
+        } else {
+          this.selectedList = []
+          this.goodsList.forEach((item, index) => {
+            item.selected = false
+          })
+        }
       }
     }
   }
@@ -185,6 +263,17 @@
     width: 100%;
     height: 100%;
     padding-top: rpx(70);
+  }
+
+  .select {
+    width: rpx(100);
+    height: rpx(100);
+    background: url("../../../static/common/icon/icon-circle.png") no-repeat center;
+    background-size: 34% 34%;
+    &.active {
+      background: url("../../../static/common/icon/icon-circle-checked.png") no-repeat center;
+      background-size: 34% 34%;
+    }
   }
 
   .cart-first {
@@ -210,6 +299,7 @@
   }
 
   .cart-second {
+    padding-bottom: rpx(98);
     .goods-info {
       display: flex;
       align-items: center;
@@ -242,7 +332,6 @@
       white-space: normal;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
-
     }
     .goods-price {
       display: flex;
@@ -271,16 +360,6 @@
       justify-content: left;
       align-items: center;
       align-content: center;
-      .select {
-        width: rpx(100);
-        height: rpx(100);
-        background: url("../../../static/common/icon/icon-circle.png") no-repeat center;
-        background-size: 34% 34%;
-        &.active {
-          background: url("../../../static/common/icon/icon-circle-checked.png") no-repeat center;
-          background-size: 34% 34%;
-        }
-      }
     }
     .cart-list-item-delete {
       height: 100%;
@@ -290,6 +369,42 @@
       align-content: center;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  .cart-third {
+    position: fixed;
+    bottom: rpx(0);
+    background: $colorM;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    height: rpx(98);
+    width: rpx(725);
+    padding: rpx(0) rpx(0) rpx(0) rpx(25);
+    .total-price {
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: left;
+      .price-title {
+        font-size: $fontB;
+        color: $colorC;
+      }
+      .price-num {
+        font-size: $fontB;
+        color: $colorB;
+      }
+    }
+    .cart-btn {
+      width: rpx(180);
+      height: rpx(98);
+      line-height: rpx(98);
+      font-size: $fontB;
+      color: $colorM;
+      text-align: center;
+      background-image: linear-gradient(90deg, #FF8D51 0%, #FF581D 99%);
     }
   }
 </style>
