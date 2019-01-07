@@ -31,15 +31,15 @@
       }
     },
     {
-      "path": "pages/classify/classify",
-      "config": {
-        "navigationBarTitleText": "分类"
-      }
-    },
-    {
       "path": "pages/shopping/detail",
       "config": {
         "navigationBarTitleText": "商品详情"
+      }
+    },
+    {
+      "path": "pages/classify/classify",
+      "config": {
+        "navigationBarTitleText": "分类"
       }
     },
     {

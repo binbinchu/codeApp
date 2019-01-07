@@ -147,6 +147,7 @@
         this.deleteLoad()
       },
       nextPay () {
+        this.$router.push({})
         console.log('结算')
       },
       allDelete () {
