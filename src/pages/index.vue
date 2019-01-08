@@ -69,6 +69,7 @@
         </div>
       </div>
     </div>
+    <a href="/pages/account/login">登录</a>
   </div>
 </template>
 

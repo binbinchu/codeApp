@@ -35,23 +35,11 @@ fly.interceptors.request.use((request) => {
   if (token) {
     authParams = {
       // 公共参数
-      'categoryType': 'SaleGoodsType@sim',
-      'streamNo': 'wxapp153570682909641893',
-      'reqSource': 'MALL_H5',
-      'appid': 'wxaae31db29df1f94d',
-      'timestamp': new Date().getTime(),
-      'sign': 'string',
       'authToken': token
     }
   } else {
     authParams = {
       // 公共参数
-      'categoryType': 'SaleGoodsType@sim',
-      'streamNo': 'wxapp153570682909641893',
-      'reqSource': 'MALL_H5',
-      'appid': 'wxaae31db29df1f94d',
-      'timestamp': new Date().getTime(),
-      'sign': 'string'
     }
   }
 
