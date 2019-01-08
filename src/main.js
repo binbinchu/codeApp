@@ -17,9 +17,9 @@ Vue.mixin({
   methods: {
     WxToLogin (data) {
       let that = this
-      console.log(data)
       wx.login({
         success (res) {
+          console.log(res.code)
           wx.checkSession({
             success () {
               const obj = {
@@ -32,7 +32,7 @@ Vue.mixin({
               that.$ajax.WxLogin(obj).then((res) => {
                 if (res.code === 0) {
                   let createTime = new Date()
-                  wx.setStorageSync('createTime', createTime)
+                  wx.setStorageSync('createdTime', createTime)
                   wx.setStorageSync('token', res.data)
                 }
               })

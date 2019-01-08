@@ -31,6 +31,12 @@
       }
     },
     {
+      "path": "pages/account/login",
+      "config": {
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
       "path": "pages/account/account",
       "config": {
         "navigationBarTitleText": "个人中心"

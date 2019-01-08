@@ -99,12 +99,21 @@
     components: {},
     created () {
       // 调用应用实例的方法获取全局数据
-      this.getUserInfo()
       this.getBanner()
       this.getHotGoods()
       this.getIndexMenu()
+      if (this.isTokenTimeOut()) {
+        console.log('token登录失效')
+      } else {
+        this.getUserInfoFn()
+      }
     },
     methods: {
+      getUserInfoFn () {
+        this.$ajax.getUserInfo().then((res) => {
+          console.log(res)
+        })
+      },
       toSearch () {
         wx.navigateTo({
           url: '/pages/search/search'
@@ -121,18 +130,6 @@
       bindViewTap () {
         const url = '/packageA/logs'
         this.$router.push(url)
-      },
-      getUserInfo () {
-        // 调用登录接口
-        wx.login({
-          success: () => {
-            wx.getUserInfo({
-              success: (res) => {
-                this.userInfo = res.userInfo
-              }
-            })
-          }
-        })
       },
       getBanner () {
         this.$ajax.getBannerTop().then((res) => {
@@ -213,7 +210,7 @@
     justify-content: space-between;
     background: #ffffff;
     flex-wrap: wrap;
-    padding:rpx(10);
+    padding: rpx(10);
     .tags-item {
       width: rpx(100);
       padding: rpx(15);
@@ -276,7 +273,8 @@
       }
     }
   }
-  .reco-font{
+
+  .reco-font {
     margin-top: rpx(20);
     text-align: center;
     font-style: normal;
@@ -289,6 +287,7 @@
     font-weight: normal;
     font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
   }
+
   .recommend {
     padding-top: rpx(15);
     padding-bottom: rpx(15);

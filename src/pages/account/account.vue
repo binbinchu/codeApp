@@ -1,11 +1,11 @@
 <template>
   <div class="account">
-    <button open-type="openSetting">
-      授权
-    </button>
-    <button open-type="getUserInfo" lang="zh_CN" @getuserinfo="getUserInfo">
-      登录
-    </button>
+    <!--<button open-type="openSetting">-->
+      <!--授权-->
+    <!--</button>-->
+    <!--<button open-type="getUserInfo" lang="zh_CN" @getuserinfo="getUserInfo">-->
+      <!--登录-->
+    <!--</button>-->
     <div class="div user-center">
       <div class="user-info-box">
         <div class="user-info-image">
@@ -21,20 +21,52 @@
     </div>
     <div class="div order-control">
       <div class="control-item">
-        <div class="item-icon"></div>
+        <div class="item-icon">
+          <i-icon type="createtask" size="28" color="#80848f"/>
+        </div>
         <div class="item-type">待付款</div>
       </div>
       <div class="control-item">
-        <div class="item-icon"></div>
+        <div class="item-icon">
+          <i-icon type="createtask" size="28" color="#80848f"/>
+        </div>
         <div class="item-type">待发货</div>
       </div>
       <div class="control-item">
-        <div class="item-icon"></div>
+        <div class="item-icon">
+          <i-icon type="createtask" size="28" color="#80848f"/>
+        </div>
         <div class="item-type">待收货</div>
       </div>
       <div class="control-item">
-        <div class="item-icon"></div>
+        <div class="item-icon">
+          <i-icon type="createtask" size="28" color="#80848f"/>
+        </div>
         <div class="item-type">待评价</div>
+      </div>
+    </div>
+    <div class="div center-list">
+      <div class="list-item">
+        <div class="center-list-icon">
+          <i-icon type="createtask" size="28" color="#80848f"/>
+        </div>
+        <div class="center-list-type">
+          <div class="text">我的收藏</div>
+          <div class="icon">
+            <i-icon type="enter"/>
+          </div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="center-list-icon">
+          <i-icon type="coordinates" size="28" color="#80848f"/>
+        </div>
+        <div class="center-list-type">
+          <div class="text">我的地址</div>
+          <div class="icon">
+            <i-icon type="enter"/>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -49,19 +81,29 @@
       }
     },
     onShow () {
-      if (wx.getStorageSync('token')) {
-        console.log(wx.getStorageSync('token'))
-      }
-      console.log(this.isTokenTimeOut())
+      wx.checkSession({
+        success () {
+          if (!wx.getStorageSync('token')) {
+            wx.navigateTo({
+              url: '/pages/account/login'
+            })
+          }
+        },
+        fail () {
+          wx.navigateTo({
+            url: '/pages/account/login'
+          })
+        }
+      })
     },
     methods: {
-      ToLogin () {
-      },
       getUserInfo () {
         let that = this
         wx.getUserInfo({
           success (res) {
-            that.WxToLogin(res)
+            if (that.isTokenTimeOut() || !wx.getStorageSync('token')) {
+              that.WxToLogin(res)
+            }
           }
         })
       }
@@ -115,23 +157,58 @@
   }
 
   .order-control {
-    margin-top: rpx(30);
+    max-height: rpx(125);
+    min-height: rpx(125);
+    margin-top: rpx(20);
     display: flex;
     align-content: center;
     align-items: center;
     justify-content: space-between;
     .control-item {
+      flex: 1;
       text-align: center;
       .item-icon {
         margin: 0 auto;
         width: rpx(80);
         height: rpx(80);
-        background: rgba(0, 0, 0, 0.5);
+        line-height: rpx(80);
       }
       .item-type {
-        margin-top: rpx(15);
         font-size: $fontI;
         color: $colorG;
+      }
+    }
+  }
+
+  .center-list {
+    margin-top: rpx(20);
+    padding-right: 0;
+    background: #ffffff;
+    .list-item {
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: left;
+      margin-bottom: rpx(15);
+    }
+    .center-list-icon {
+      margin: 0 auto;
+      width: rpx(60);
+      height: rpx(60);
+      line-height: rpx(60);
+    }
+    .center-list-type {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: space-between;
+      padding-left: rpx(25);
+      .text {
+        flex: 1;
+        font-size: $fontB;
+        padding: rpx(12) 0;
+        border-bottom: rpx(1) solid $colorH;
       }
     }
   }

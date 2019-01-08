@@ -41,7 +41,7 @@ fly.interceptors.request.use((request) => {
       'appid': 'wxaae31db29df1f94d',
       'timestamp': new Date().getTime(),
       'sign': 'string',
-      'token': token
+      'authToken': token
     }
   } else {
     authParams = {
