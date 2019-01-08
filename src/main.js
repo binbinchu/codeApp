@@ -18,29 +18,33 @@ Vue.mixin({
     WxToLogin (data) {
       let that = this
       console.log(data)
-      wx.checkSession({
-        success () {
-          const obj = {
-            code: wx.getStorageSync('code'),
-            // code: '081sMK240CLaHK1ybo140gso240sMK2Y',
-            iv: data.iv,
-            encryptedData: data.encryptedData,
-            recommendId: ''
-          }
-          that.$ajax.WxLogin(obj).then((res) => {
-            if (res.code === 0) {
-              let createTime = new Date()
-              wx.setStorageSync('createTime', createTime)
-              wx.setStorageSync('token', res.data)
-            }
-          })
-        },
-        fail () {
-          wx.login({
-            success (res) {
-              if (res.code) {
-                wx.setStorageSync('code', res.code)
+      wx.login({
+        success (res) {
+          wx.checkSession({
+            success () {
+              const obj = {
+                code: res.code,
+                // code: '081sMK240CLaHK1ybo140gso240sMK2Y',
+                iv: data.iv,
+                encryptedData: data.encryptedData,
+                recommendId: ''
               }
+              that.$ajax.WxLogin(obj).then((res) => {
+                if (res.code === 0) {
+                  let createTime = new Date()
+                  wx.setStorageSync('createTime', createTime)
+                  wx.setStorageSync('token', res.data)
+                }
+              })
+            },
+            fail () {
+              wx.login({
+                success (res) {
+                  if (res.code) {
+                    wx.setStorageSync('code', res.code)
+                  }
+                }
+              })
             }
           })
         }
