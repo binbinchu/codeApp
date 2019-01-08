@@ -16,6 +16,7 @@ if (process.env.NODE_ENV === 'testing') {
 }
 const host = _URL_
 
+let token = wx.getStorageSync('token')
 console.log(process.env.NODE_ENV)
 // 添加请求拦截器
 fly.interceptors.request.use((request) => {
@@ -30,15 +31,28 @@ fly.interceptors.request.use((request) => {
     'X-Tag': 'flyio',
     'content-type': 'application/json'
   }
-
-  let authParams = {
-    // 公共参数
-    'categoryType': 'SaleGoodsType@sim',
-    'streamNo': 'wxapp153570682909641893',
-    'reqSource': 'MALL_H5',
-    'appid': 'string',
-    'timestamp': new Date().getTime(),
-    'sign': 'string'
+  let authParams
+  if (token) {
+    authParams = {
+      // 公共参数
+      'categoryType': 'SaleGoodsType@sim',
+      'streamNo': 'wxapp153570682909641893',
+      'reqSource': 'MALL_H5',
+      'appid': 'wxaae31db29df1f94d',
+      'timestamp': new Date().getTime(),
+      'sign': 'string',
+      'token': token
+    }
+  } else {
+    authParams = {
+      // 公共参数
+      'categoryType': 'SaleGoodsType@sim',
+      'streamNo': 'wxapp153570682909641893',
+      'reqSource': 'MALL_H5',
+      'appid': 'wxaae31db29df1f94d',
+      'timestamp': new Date().getTime(),
+      'sign': 'string'
+    }
   }
 
   request.body && Object.keys(request.body).forEach((val) => {

@@ -37,6 +37,7 @@ $fontE: rpx(18);
 $fontF: rpx(16);
 $fontG: rpx(14);
 $fontH: rpx(12);
+$fontI: rpx(26);
 
 @mixin two-wrap {
   overflow: hidden;
@@ -49,7 +50,7 @@ $fontH: rpx(12);
 
 .radiusBox {
   width: 96%;
-  margin:0 auto;
+  margin: 0 auto;
   margin-top: rpx(15);
   border-radius: rpx(20);
 }

@@ -147,7 +147,12 @@
         this.deleteLoad()
       },
       nextPay () {
-        this.$router.push({})
+        this.$router.push({
+          path: '/pages/shopping/orderSure',
+          query: {
+            type: 'orderDetail'
+          }
+        })
         console.log('结算')
       },
       allDelete () {

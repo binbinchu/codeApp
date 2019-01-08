@@ -13,18 +13,6 @@
       }
     },
     {
-      "path": "pages/account/account",
-      "config": {
-        "navigationBarTitleText": "我的"
-      }
-    },
-    {
-      "path": "pages/search/search",
-      "config": {
-        "navigationBarTitleText": "搜索"
-      }
-    },
-    {
       "path": "pages/shopping/shoppingCart",
       "config": {
         "navigationBarTitleText": "购物车"
@@ -34,6 +22,24 @@
       "path": "pages/shopping/detail",
       "config": {
         "navigationBarTitleText": "商品详情"
+      }
+    },
+    {
+      "path": "pages/shopping/orderSure",
+      "config": {
+        "navigationBarTitleText": "订单确认"
+      }
+    },
+    {
+      "path": "pages/account/account",
+      "config": {
+        "navigationBarTitleText": "个人中心"
+      }
+    },
+    {
+      "path": "pages/search/search",
+      "config": {
+        "navigationBarTitleText": "搜索"
       }
     },
     {
@@ -49,8 +55,9 @@
   ],
   "window": {
     "enablePullDownRefresh": true,
+    "backgroundColorTop": "#f1f1f1",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   },

@@ -1,6 +1,10 @@
 import _fly from './config'
 
 export default {
+  // 登录 换token
+  WxLogin (data, config) {
+    return _fly.post(`WxxCx.WxxCxLogin`, data, config)
+  },
   // search
   loadSearch (data, config) {
     return _fly.post(`Goods.getSearchName`, data, config)
