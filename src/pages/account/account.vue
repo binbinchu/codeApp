@@ -1,11 +1,11 @@
 <template>
   <div class="account">
-    <!--<button open-type="openSetting">-->
-      <!--授权-->
-    <!--</button>-->
-    <!--<button open-type="getUserInfo" lang="zh_CN" @getuserinfo="getUserInfo">-->
-      <!--登录-->
-    <!--</button>-->
+    <button open-type="openSetting">
+      授权
+    </button>
+    <button open-type="getUserInfo" lang="zh_CN" @getuserinfo="getUserInfo">
+      登录
+    </button>
     <div class="div user-center">
       <div class="user-info-box">
         <div class="user-info-image">
@@ -77,24 +77,29 @@
     name: 'account',
     data () {
       return {
-        userInfo: {}
+        userInfo: {},
+        userinfo: ''
       }
     },
     onShow () {
-      wx.checkSession({
-        success () {
-          if (!wx.getStorageSync('token')) {
-            wx.navigateTo({
-              url: '/pages/account/login'
-            })
-          }
-        },
-        fail () {
-          wx.navigateTo({
-            url: '/pages/account/login'
-          })
-        }
-      })
+      // if (wx.getStorageSync('token')) {
+      //   console.log()
+      //   this.getUserInfoFn()
+      // }
+      // wx.checkSession({
+      //   success () {
+      //     if (!wx.getStorageSync('token')) {
+      //       wx.navigateTo({
+      //         url: '/pages/account/login'
+      //       })
+      //     }
+      //   },
+      //   fail () {
+      //     wx.navigateTo({
+      //       url: '/pages/account/login'
+      //     })
+      //   }
+      // })
     },
     methods: {
       getUserInfo () {

@@ -110,11 +110,6 @@
       }
     },
     methods: {
-      getUserInfoFn () {
-        this.$ajax.getUserInfo().then((res) => {
-          console.log(res)
-        })
-      },
       toSearch () {
         wx.navigateTo({
           url: '/pages/search/search'

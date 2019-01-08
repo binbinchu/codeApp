@@ -12,9 +12,16 @@ Vue.config.productionTip = false
 
 Vue.mixin({
   data () {
-    return {}
+    return {
+      authToken: ''
+    }
   },
   methods: {
+    getUserInfoFn () {
+      this.$ajax.getUserInfo().then((res) => {
+        console.log(res)
+      })
+    },
     WxToLogin (data) {
       let that = this
       wx.login({
@@ -34,6 +41,7 @@ Vue.mixin({
                   let createTime = new Date()
                   wx.setStorageSync('createdTime', createTime)
                   wx.setStorageSync('token', res.data)
+                  that.authToken = res.data
                 }
               })
             },
