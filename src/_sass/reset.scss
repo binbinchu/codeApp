@@ -27,6 +27,7 @@ $colorR: #001529;
 $colorS: #002140;
 $colorT: #232526;
 $colorU: #bebebe;
+$colorV: #ed3f14;
 
 /** 常用字体大小 **/
 $fontA: rpx(34);
@@ -37,7 +38,10 @@ $fontE: rpx(18);
 $fontF: rpx(16);
 $fontG: rpx(14);
 $fontH: rpx(12);
-$fontI: rpx(26);
+$fontI: rpx(32);
+$fontJ: rpx(30);
+$fontK: rpx(28);
+$fontL: rpx(26);
 
 @mixin two-wrap {
   overflow: hidden;
@@ -49,9 +53,7 @@ $fontI: rpx(26);
 }
 
 .radiusBox {
-  width: 96%;
-  margin: 0 auto;
-  margin-top: rpx(15);
+  margin: rpx(15) auto 0;
   border-radius: rpx(20);
 }
 

@@ -14,10 +14,9 @@
     data () {
       return {}
     },
-    method: {
+    methods: {
       getUserInfos () {
         let that = this
-        console.log(that)
         wx.getUserInfo({
           withCredentials: true,
           success (res) {

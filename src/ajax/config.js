@@ -15,7 +15,6 @@ if (process.env.NODE_ENV === 'testing') {
   _URL_ = ''
 }
 const host = _URL_
-
 let token = wx.getStorageSync('token')
 console.log(process.env.NODE_ENV)
 // 添加请求拦截器
@@ -24,7 +23,6 @@ fly.interceptors.request.use((request) => {
     title: '加载中',
     mask: true
   })
-  console.log(request)
   // request.headers["X-Tag"] = "flyio";
   // request.headers['content-type']= 'application/json';
   request.headers = {
@@ -32,6 +30,7 @@ fly.interceptors.request.use((request) => {
     'content-type': 'application/json'
   }
   let authParams
+  console.log(token)
   if (token) {
     authParams = {
       // 公共参数

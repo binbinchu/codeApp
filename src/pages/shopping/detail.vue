@@ -165,6 +165,9 @@
       },
       Buy () {
         console.log('立即购买')
+        this.$router.push({
+          path: '/pages/shopping/orderSure'
+        })
       },
       goodsCount (e) {
         this.count = e.mp.detail.value

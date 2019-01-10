@@ -17,8 +17,11 @@ Vue.mixin({
     }
   },
   methods: {
-    getUserInfoFn () {
-      this.$ajax.getUserInfo().then((res) => {
+    getUserInfoFn (token) {
+      const obj = {
+        'authToken': token
+      }
+      this.$ajax.getUserInfo(obj).then((res) => {
         console.log(res)
       })
     },
@@ -26,7 +29,6 @@ Vue.mixin({
       let that = this
       wx.login({
         success (res) {
-          console.log(res.code)
           wx.checkSession({
             success () {
               const obj = {
@@ -42,6 +44,9 @@ Vue.mixin({
                   wx.setStorageSync('createdTime', createTime)
                   wx.setStorageSync('token', res.data)
                   that.authToken = res.data
+                  wx.navigateBack({
+                    delta: 1
+                  })
                 }
               })
             },
