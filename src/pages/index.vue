@@ -98,15 +98,16 @@
     },
 
     components: {},
-    onLoad () {
-      // 调用应用实例的方法获取全局数据
+    created () {
       this.getBanner()
       this.getHotGoods()
       this.getIndexMenu()
+    },
+    onShow () {
       if (this.isTokenTimeOut()) {
         console.log('token登录失效')
       } else {
-        this.getUserInfoFn()
+        console.log(wx.getStorageSync('userInfo'))
       }
     },
     methods: {

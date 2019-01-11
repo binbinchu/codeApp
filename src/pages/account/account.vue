@@ -3,11 +3,11 @@
     <div class="div user-center">
       <div class="user-info-box">
         <div class="user-info-image">
-          <img src="" alt="">
+          <img :src="userInfo.headimgurl" alt="">
         </div>
         <div class="user-info">
           <div class="user-name">
-            谁说可可西里没有海
+            {{userInfo.user_name}}
           </div>
           <div class="user-info-content"></div>
         </div>
@@ -71,13 +71,14 @@
     name: 'account',
     data () {
       return {
-        userInfo: {},
-        userinfo: ''
+        userInfo: {}
       }
+    },
+    onLoad () {
     },
     onShow () {
       if (wx.getStorageSync('token')) {
-        this.getUserInfoFn(wx.getStorageSync('token'))
+        this.getUserInfoFn()
       }
       wx.checkSession({
         success () {
@@ -95,6 +96,14 @@
       })
     },
     methods: {
+      getUserInfoFn () {
+        this.$ajax.getUserInfo().then((res) => {
+          if (res.code === 0) {
+            wx.setStorageSync('userInfo', JSON.stringify(res.data))
+            this.userInfo = res.data
+          }
+        })
+      },
       getUserInfo () {
         let that = this
         wx.getUserInfo({
