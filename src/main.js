@@ -68,6 +68,14 @@ Vue.mixin({
         // 没过期
         return false
       }
+    },
+    toList (item) {
+      this.$router.push({
+        path: '/pages/classify/goodsList',
+        query: {
+          goodsListId: item.id
+        }
+      })
     }
   }
 })

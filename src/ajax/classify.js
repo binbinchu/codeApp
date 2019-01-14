@@ -8,5 +8,9 @@ export default {
   // 根据分类获取商品列表
   getShopping (data, config) {
     return _fly.post(`Goods.getGoodsList`, data, config)
+  },
+  // 商品分类列表
+  getGoodsList (data, config) {
+    return _fly.post(`Goods.getGoodsList`, data, config)
   }
 }

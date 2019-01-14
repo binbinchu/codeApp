@@ -13,7 +13,7 @@
     <div class="classify-right">
       <scroll-view scroll-y="true" class="classify-scroll-view">
         <ul class="classify-right-ul">
-          <li class="right-item" v-for="(item,index) in rightList" :key="index">
+          <li class="right-item" v-for="(item,index) in rightList" :key="index" v-on:click="toList(item)">
             <div class="item-image">
               <img :src="item.img" alt="">
             </div>
@@ -67,7 +67,6 @@
       selectedFn (item, index) {
         this.currIndex = index
         this.goodsClass = item.id
-        console.log(item.id)
         this.getShoppingRight()
       }
     }
@@ -97,7 +96,7 @@
         &.leftActive {
           background: #ffffff;
           font-size: rpx(30);
-          color:red;
+          color: red;
         }
       }
     }
