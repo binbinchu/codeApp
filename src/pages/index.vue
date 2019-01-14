@@ -69,15 +69,11 @@
         </div>
       </div>
     </div>
-    <a href="/pages/account/login">登录</a>
   </div>
 </template>
 
 <script>
   export default {
-    config: {
-      navigationBarTitleText: '个人中心'
-    },
     data () {
       return {
         motto: 'Hello World',

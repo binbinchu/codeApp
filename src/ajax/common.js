@@ -37,5 +37,13 @@ export default {
   // 获取全部pid!=0的分类
   getAllClassify (data, config) {
     return _fly.post(`getHomeClassify`, data, config)
+  },
+  // 收藏
+  likeThis (data, config) {
+    return _fly.post(`Collection.collectionData`, data, config)
+  },
+  // 取消收藏
+  noLikeThis (data, config) {
+    return _fly.post(`Collection.cancelCollect`, data, config)
   }
 }

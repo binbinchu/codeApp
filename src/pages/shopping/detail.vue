@@ -32,6 +32,10 @@
             <div class="symbol">￥</div>
             <div class="number">{{goodsData.original_price}}</div>
           </div>
+          <div class="like-group" v-on:click="isLikeFn">
+            <i-icon type="like" size="34" color="#ed3f14" v-if="!isLike"/>
+            <i-icon type="like_fill" size="34" color="#ed3f14" v-else></i-icon>
+          </div>
         </div>
         <div class="detail-sale-city">
           <div class="detail-sale">已售:{{goodsData.sales}}件</div>
@@ -111,6 +115,7 @@
     name: 'detail',
     data () {
       return {
+        isLike: false,
         indicatorDots: true,
         autoplay: true,
         interval: 5000,
@@ -125,12 +130,19 @@
     components: {},
     onShow () {
       this.selectedNum = 0
-      console.log(this.$route.query.goodsId)
       this.getGoodsData(this.$route.query.goodsId)
+      this.getLike()
     },
     created () {
     },
     methods: {
+      isLikeFn () {
+        if (this.isLike) {
+          this.toNoLikeThis()
+        } else {
+          this.toLikeThis()
+        }
+      },
       handleOpen () {
         this.visible = true
       },
@@ -160,6 +172,43 @@
             if (this.visible) {
               this.visible = !this.visible
             }
+          }
+        })
+      },
+      getLike () {
+        const obj = {
+          goods_id: this.$route.query.goodsId
+        }
+        this.$ajax.isLikeApi(obj).then((res) => {
+          if (res.code === 0) {
+            if (res.data === 0) {
+              this.isLike = false
+            } else {
+              this.isLike = true
+            }
+          }
+        })
+      },
+      toLikeThis () {
+        const obj = {
+          type: '10',
+          obj_id: this.$route.query.goodsId
+        }
+        this.$ajax.likeThis(obj).then((res) => {
+          if (res.code === 0) {
+            this.isLike = true
+            this.messageFn(res.data, 'success')
+          }
+        })
+      },
+      toNoLikeThis () {
+        const obj = {
+          obj_id: this.$route.query.goodsId
+        }
+        this.$ajax.noLikeThis(obj).then((res) => {
+          if (res.code === 0) {
+            this.isLike = false
+            this.messageFn('取消收藏', 'error')
           }
         })
       },
@@ -307,12 +356,22 @@
       @include two-wrap;
     }
     .detail-goods-price {
+      position: relative;
       display: flex;
       justify-content: left;
       align-content: flex-end;
       align-items: flex-end;
       .old-price {
         margin-left: rpx(15);
+      }
+      .like-group {
+        position: absolute;
+        right: rpx(0);
+        top: rpx(0);
+        width: rpx(68);
+        height: rpx(68);
+        text-align: center;
+        line-height: rpx(68);
       }
     }
     .detail-sale-city {

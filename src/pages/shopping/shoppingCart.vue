@@ -30,7 +30,6 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -159,6 +158,8 @@
         console.log('删除')
       },
       deleteLoad () {
+        this.visible = false
+        this.goodsList[this.deleteObj.index].toggleFlag = true
         let obj = {
           id: this.deleteObj.deleteId
         }
@@ -169,8 +170,6 @@
               type: 'success'
             })
             this.goodsList.splice(this.deleteObj.index, 1)
-            this.goodsList[this.deleteObj.index].toggleFlag = true
-            this.visible = false
           } else {
             $Message({
               content: '删除失败',

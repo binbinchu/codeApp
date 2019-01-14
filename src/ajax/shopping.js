@@ -20,5 +20,9 @@ export default {
   // 购物车删除
   deleteCarItem (data, config) {
     return _fly.post(`ShoppingCar.delGoodsCar`, data, config)
+  },
+  // 判断商品收藏状态
+  isLikeApi (data, config) {
+    return _fly.post(`Collection.judgeCollect`, data, config)
   }
 }
