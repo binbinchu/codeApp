@@ -73,7 +73,8 @@ Vue.mixin({
       this.$router.push({
         path: '/pages/classify/goodsList',
         query: {
-          goodsListId: item.id
+          goodsListId: item.id,
+          title: item.name
         }
       })
     }
