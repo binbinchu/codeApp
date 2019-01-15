@@ -21,7 +21,10 @@ export default {
   getProvinceList (data, config) {
     return _fly.post(`Common.getProvinceList`, data, config)
   },
-
+  // 获取城市
+  getCityList (data, config) {
+    return _fly.post(`Common.getCityList`, data, config)
+  },
   // 获取分类
   getGoodsClassify (data, config) {
     return _fly.post(`Goods.getClassify`, data, config)

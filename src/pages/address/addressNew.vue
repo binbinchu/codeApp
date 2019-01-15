@@ -31,15 +31,12 @@
           style="width: 100%; height: 300px;"
           :value="value"
           @change="bindChange">
-          <picker-view-column>
-            <div v-for="(item,index) in years" style="line-height: 50px" :key="index">{{item}}年</div>
+          <picker-view-column v-if="provinceData.length>0">
+            <div v-for="(item,index) in provinceData" style="line-height: 50px" :key="index">{{item.name}}</div>
           </picker-view-column>
-          <picker-view-column>
-            <div v-for="(item,index) in months" style="line-height: 50px" :key="index">{{item}}月</div>
+          <picker-view-column v-if="cityData.length>0">
+            <div v-for="(item,index) in cityData" style="line-height: 50px" :key="index">{{item.name}}日</div>
           </picker-view-column>
-          <!--<picker-view-column>-->
-            <!--<div v-for="(item,index) in days" style="line-height: 50px" :key="index">{{item}}日</div>-->
-          <!--</picker-view-column>-->
         </picker-view>
       </div>
     </i-action-sheet>
@@ -52,7 +49,12 @@
     data () {
       return {
         visible: false,
-        value: '',
+        provinceData: [],
+        cityData: [],
+        provinceId: 1,
+        provinceNum: 0,
+        value: [1, 0],
+        days: [],
         addressData: {
           name: '',
           phone: '',
@@ -65,6 +67,19 @@
       wx.setNavigationBarTitle({
         title: this.$route.query.title
       })
+      if (!wx.getStorageSync('province')) {
+        this.getProvinceList()
+      } else {
+        this.provinceData = JSON.parse(wx.getStorageSync('province'))
+      }
+      for (let i = 1; i <= 31; i++) {
+        this.days.push(i)
+      }
+    },
+    watch: {
+      'provinceId' (val) {
+        this.getCityList(val)
+      }
     },
     methods: {
       openTree () {
@@ -72,17 +87,42 @@
       },
       bindChange (e) {
         const val = e.mp.detail.value
-        console.log(val)
+        this.value = [val[0], val[1] || 0]
+        console.log(this.value)
+        this.provinceId = this.provinceData[this.value[0]].id
+        console.log(this.provinceData[this.value[0]].name)
+        if (this.cityData.length > 0) {
+          console.log(this.cityData)
+          console.log(this.cityData[this.value[1]].name)
+        }
+        // console.log(e)
       },
       formSubmit (e) {
         console.log('form发生了submit事件，携带数据为：', e.mp.detail.value)
         this.addressData.name = e.mp.detail.value.name
         this.addressData.phone = e.mp.detail.value.phone
         this.addressData.detail = e.mp.detail.value.detail
-        console.log(this.addressData)
       },
       formReset () {
         console.log('form发生了reset事件')
+      },
+      getProvinceList () {
+        this.$ajax.getProvinceList().then((res) => {
+          if (res.code === 0) {
+            this.provinceData = res.data
+            wx.setStorageSync('province', JSON.stringify(res.data))
+          }
+        })
+      },
+      getCityList (id) {
+        const obj = {
+          provinceId: id
+        }
+        this.$ajax.getCityList(obj).then((res) => {
+          if (res.code === 0) {
+            this.cityData = res.data
+          }
+        })
       }
     }
   }

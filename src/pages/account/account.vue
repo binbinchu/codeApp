@@ -78,7 +78,11 @@
     },
     onShow () {
       if (wx.getStorageSync('token')) {
-        this.getUserInfoFn()
+        if (!wx.getStorageSync('userInfo')) {
+          this.getUserInfoFn()
+        } else {
+          this.userInfo = JSON.parse(wx.getStorageSync('userInfo'))
+        }
       }
       wx.checkSession({
         success () {
@@ -101,16 +105,6 @@
           if (res.code === 0) {
             wx.setStorageSync('userInfo', JSON.stringify(res.data))
             this.userInfo = res.data
-          }
-        })
-      },
-      getUserInfo () {
-        let that = this
-        wx.getUserInfo({
-          success (res) {
-            if (that.isTokenTimeOut() || !wx.getStorageSync('token')) {
-              that.WxToLogin(res)
-            }
           }
         })
       },
