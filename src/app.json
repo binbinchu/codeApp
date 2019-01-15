@@ -43,6 +43,15 @@
       }
     },
     {
+      "path": "pages/address/addressList",
+      "config": {
+        "navigationBarTitleText": "地址管理"
+      }
+    },
+    {
+      "path": "pages/address/addressNew"
+    },
+    {
       "path": "pages/search/search",
       "config": {
         "navigationBarTitleText": "搜索"
@@ -65,7 +74,7 @@
   "window": {
     "enablePullDownRefresh": true,
     "backgroundColor": "#f1f1f1",
-    "backgroundColorTop": "red",
+    "backgroundColorTop": "#f1f1f1",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTitleText": "WeChat",

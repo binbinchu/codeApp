@@ -55,7 +55,7 @@
         <div class="center-list-icon">
           <i-icon type="coordinates" size="28" color="#80848f"/>
         </div>
-        <div class="center-list-type">
+        <div class="center-list-type" @click="toAddressList">
           <div class="text">我的地址</div>
           <div class="icon">
             <i-icon type="enter"/>
@@ -112,6 +112,11 @@
               that.WxToLogin(res)
             }
           }
+        })
+      },
+      toAddressList () {
+        wx.navigateTo({
+          url: '/pages/address/addressList'
         })
       }
     }
