@@ -89,7 +89,12 @@
         })
       },
       toDetail (item) {
-        console.log(item)
+        this.$router.push({
+          path: '/pages/shopping/detail',
+          query: {
+            goodsId: item.id
+          }
+        })
       }
     }
   }
