@@ -77,6 +77,11 @@ Vue.mixin({
           title: item.name
         }
       })
+    },
+    unique (arr) {
+      // 去重
+      let x = new Set(arr)
+      return [...x]
     }
   }
 })

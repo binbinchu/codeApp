@@ -14,24 +14,31 @@
         <div class="hot-search">
           <div class="hot-search-type">历史搜索</div>
         </div>
-        <div class="hot-search-content">
-          <div class="content-item" v-for="(item,index) in historyItemData" :key="index">{{item}}</div>
+        <div class="hot-search-content" v-if="historyData.length>0">
+          <div class="content-item" v-for="(item,index) in historyData" :key="index">{{item}}</div>
+        </div>
+        <div class="hot-search-content" v-else>
+          <div class="no-history-text">
+            暂无搜索记录
+          </div>
         </div>
       </div>
-      <div class="section search-second">
-        <div class="hot-search">
-          <div class="hot-search-type">热门搜索</div>
-          <div class="hot-search-btn">换一批</div>
-        </div>
-        <div class="hot-search-content">
-          <div class="content-item" v-for="(item,index) in itemData" :key="index">{{item}}</div>
-        </div>
-      </div>
+      <!--<div class="section search-second">-->
+      <!--<div class="hot-search">-->
+      <!--<div class="hot-search-type">热门搜索</div>-->
+      <!--<div class="hot-search-btn">换一批</div>-->
+      <!--</div>-->
+      <!--<div class="hot-search-content">-->
+      <!--<div class="content-item" v-for="(item,index) in itemData" :key="index">{{item}}</div>-->
+      <!--</div>-->
+      <!--</div>-->
     </div>
     <div v-show="resultFlage">
       <div class="search-list-mask">
         <ul>
-          <li class="result-list-item" v-for="(item,index) in searchList" :key="index">{{item.name}}</li>
+          <li class="result-list-item" v-for="(item,index) in searchList" :key="index" @click="toDetail(item)">
+            {{item.name}}
+          </li>
         </ul>
       </div>
     </div>
@@ -45,10 +52,14 @@
       return {
         searchValue: '',
         itemData: ['电脑', '手机', '家电', '护肤品', '婴儿用品', '男人装', '女人装', '旅游', '优惠券', '去哪儿了', '我在这儿'],
-        historyItemData: ['去哪儿了', '我在这儿'],
         searchList: [],
-        resultFlage: false
+        resultFlage: false,
+        historyData: []
       }
+    },
+    onShow () {
+      this.resultFlage = false
+      this.historyData = wx.getStorageSync('historyData') || []
     },
     methods: {
       // request:search
@@ -60,6 +71,7 @@
         this.$ajax.loadSearch(obj).then((res) => {
           if (res.code === 0) {
             this.searchList = res.data
+            this.historyData.unshift(this.searchValue)
             if (this.searchList.length > 0 && res.data.length > 0) {
               this.resultFlage = true
             } else {
@@ -71,16 +83,28 @@
         })
       },
       toSearch () {
-        this.requestSearch(this.searchValue)
-      },
-      changeFn (e) {
-        this.searchValue = e.mp.detail.detail.value
+        // this.requestSearch(this.searchValue)
+        const historyData = wx.getStorageSync('historyData') || []
+        historyData.unshift(this.searchValue)
+        let historyDataArr = this.unique(historyData)
+        wx.setStorageSync('historyData', historyDataArr)
         if (this.searchValue !== '') {
           this.requestSearch(this.searchValue)
         } else {
           this.searchList = []
           this.resultFlage = false
         }
+      },
+      changeFn (e) {
+        this.searchValue = e.mp.detail.detail.value
+      },
+      toDetail (item) {
+        this.$router.push({
+          path: '/pages/shopping/detail',
+          query: {
+            goodsId: item.id
+          }
+        })
       }
     }
   }
@@ -158,6 +182,9 @@
         font-size: rpx(24);
         margin-bottom: rpx(15);
         margin-right: rpx(15);
+      }
+      .no-history-text {
+        font-size: $fontC;
       }
     }
   }

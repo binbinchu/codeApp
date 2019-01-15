@@ -99,11 +99,13 @@
       this.getHotGoods()
       this.getIndexMenu()
     },
+    mounted () {
+    },
     onShow () {
       if (this.isTokenTimeOut()) {
         console.log('token登录失效')
       } else {
-        console.log(wx.getStorageSync('userInfo'))
+        // console.log(wx.getStorageSync('userInfo'))
       }
     },
     methods: {

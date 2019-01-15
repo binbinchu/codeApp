@@ -85,8 +85,6 @@
               this.complete = false
               this.loaded = true
             }
-            console.log(this.complete)
-            console.log(this.loaded)
           }
         })
       },
