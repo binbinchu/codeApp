@@ -62,6 +62,17 @@
           </div>
         </div>
       </div>
+      <div class="list-item">
+        <div class="center-list-icon">
+          <i-icon type="coordinates" size="28" color="#80848f"/>
+        </div>
+        <div class="center-list-type">
+          <div class="text">我的分销</div>
+          <div class="icon">
+            <i-icon type="enter"/>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
