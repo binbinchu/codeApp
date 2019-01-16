@@ -68,6 +68,20 @@ Vue.mixin({
         // 没过期
         return false
       }
+    },
+    toList (item) {
+      this.$router.push({
+        path: '/pages/classify/goodsList',
+        query: {
+          goodsListId: item.id,
+          title: item.name
+        }
+      })
+    },
+    unique (arr) {
+      // 去重
+      let x = new Set(arr)
+      return [...x]
     }
   }
 })

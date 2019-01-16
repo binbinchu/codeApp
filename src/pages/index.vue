@@ -18,7 +18,7 @@
       </swiper>
     </div>
     <div class="index-menu-tags radiusBox">
-      <div class="tags-item" v-for="(item,index) in tagsMenu" :key="index">
+      <div class="tags-item" v-for="(item,index) in tagsMenu" :key="index" @click="toList(item)">
         <div class="tags-image">
           <img :src="item.img" alt="">
         </div>
@@ -99,11 +99,13 @@
       this.getHotGoods()
       this.getIndexMenu()
     },
+    mounted () {
+    },
     onShow () {
       if (this.isTokenTimeOut()) {
         console.log('token登录失效')
       } else {
-        console.log(wx.getStorageSync('userInfo'))
+        // console.log(wx.getStorageSync('userInfo'))
       }
     },
     methods: {
@@ -225,6 +227,20 @@
     }
   }
 
+  .reco-font {
+    margin-top: rpx(20);
+    text-align: center;
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-variant-east-asian: normal;
+    font-stretch: normal;
+    font-size: rpx(45);
+    font-weight: normal;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+  }
+
   .shopping-div {
     padding-left: rpx(20);
     padding-right: rpx(20);
@@ -265,20 +281,6 @@
         }
       }
     }
-  }
-
-  .reco-font {
-    margin-top: rpx(20);
-    text-align: center;
-    font-style: normal;
-    font-variant-ligatures: normal;
-    font-variant-caps: normal;
-    font-variant-numeric: normal;
-    font-variant-east-asian: normal;
-    font-stretch: normal;
-    font-size: rpx(45);
-    font-weight: normal;
-    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
   }
 
   .recommend {

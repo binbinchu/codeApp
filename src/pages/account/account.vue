@@ -55,7 +55,7 @@
         <div class="center-list-icon">
           <i-icon type="coordinates" size="28" color="#80848f"/>
         </div>
-        <div class="center-list-type">
+        <div class="center-list-type" @click="toAddressList">
           <div class="text">我的地址</div>
           <div class="icon">
             <i-icon type="enter"/>
@@ -89,7 +89,11 @@
     },
     onShow () {
       if (wx.getStorageSync('token')) {
-        this.getUserInfoFn()
+        if (!wx.getStorageSync('userInfo')) {
+          this.getUserInfoFn()
+        } else {
+          this.userInfo = JSON.parse(wx.getStorageSync('userInfo'))
+        }
       }
       wx.checkSession({
         success () {
@@ -115,14 +119,9 @@
           }
         })
       },
-      getUserInfo () {
-        let that = this
-        wx.getUserInfo({
-          success (res) {
-            if (that.isTokenTimeOut() || !wx.getStorageSync('token')) {
-              that.WxToLogin(res)
-            }
-          }
+      toAddressList () {
+        wx.navigateTo({
+          url: '/pages/address/addressList'
         })
       }
     }
