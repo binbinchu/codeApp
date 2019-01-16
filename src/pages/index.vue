@@ -58,7 +58,7 @@
     <div class="section shopping-div recommend">
       <div class="recommend-item" v-for="(item,index) in hotGoodsData" :key="index" v-on:click="toDetail(item)">
         <div class="goods-image">
-          <img :src="item.img_list" alt="">
+          <img :src="item.img" alt="">
         </div>
         <div class="goods-info">
           <div class="goods-name">{{item.name}}</div>

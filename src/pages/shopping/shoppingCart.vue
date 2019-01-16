@@ -65,6 +65,7 @@
     <v-modal v-if="visible" :visible="visible" :modalOption="modalOption" :actions="actions"
              :actionMode="actionMode" @click="handleClickCancel"></v-modal>
     <i-message id="message"/>
+    <i-toast id="toast"/>
   </div>
 </template>
 
@@ -124,10 +125,10 @@
           this.selectId.push(item.id)
         })
         this.deleteObj.deleteId = this.selectId.join(',')
-      },
-      'deleteObj.deleteId' (val) {
-        console.log(val)
       }
+      // 'deleteObj.deleteId' (val) {
+      //   console.log(val)
+      // }
     },
     onShow () {
       this.loadShoppingCart()
@@ -136,20 +137,23 @@
       changeEd () {
         this.editorFlag = !this.editorFlag
       },
-      handleText () {
-        $Toast({
-          content: '这是文本提示'
-        })
-      },
       deleteFn () {
         // 删除操作
         this.deleteLoad()
       },
       nextPay () {
+        if (!this.deleteObj.deleteId) {
+          $Toast({
+            content: '请选择要结算的商品',
+            type: 'error'
+          })
+          return false
+        }
         this.$router.push({
           path: '/pages/shopping/orderSure',
           query: {
-            type: 'orderDetail'
+            type: 'orderDetail',
+            goodsIds: this.deleteObj.deleteId
           }
         })
         console.log('结算')
@@ -229,11 +233,11 @@
         })
       },
       selectedFn (item) {
-        this.selectedList.forEach((item, index) => {
-          item.selected = false
-        })
+        // this.selectedList.forEach((item, index) => {
+        //   item.selected = false
+        // })
         item.selected = !item.selected
-        this.selectedList = []
+        // this.selectedList = []
         if (item.selected) {
           this.selectedList.push(item)
         } else {

@@ -78,6 +78,7 @@
       background: #FF0000 !important;
     }
   }
+
   .action-btn {
     &.shopping-cart-btn {
       color: #ffffff !important;

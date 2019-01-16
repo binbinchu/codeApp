@@ -88,7 +88,21 @@
 
 <script>
   export default {
-    name: 'orderSure'
+    name: 'orderSure',
+    data () {
+      return {}
+    },
+    onShow () {
+      console.log(this.$route.query.goodsIds)
+      this.getDefaultAddress()
+    },
+    methods: {
+      getDefaultAddress () {
+        this.$ajax.getDefaultAddress().then((res) => {
+          console.log(res)
+        })
+      }
+    }
   }
 </script>
 <style lang="scss">

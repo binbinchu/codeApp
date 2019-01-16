@@ -52,9 +52,10 @@
     methods: {
       loadMore () {
         this.page++
-        this.getGoodsList()
         if (!this.loaded) {
           this.page = this.page - 1
+        } else {
+          this.getGoodsList()
         }
       },
       getGoodsList () {

@@ -4,6 +4,7 @@ import App from '@/App'
 import store from '@/store'
 import $ajax from './ajax'
 import _ from 'lodash'
+import { $Toast, $Message } from '../static/iview/base/index'
 
 Vue.use(MpvueRouterPatch)
 Vue.prototype.$ajax = $ajax
@@ -82,6 +83,18 @@ Vue.mixin({
       // 去重
       let x = new Set(arr)
       return [...x]
+    },
+    toast (content, type) {
+      $Toast({
+        content: content,
+        type: type
+      })
+    },
+    message (content, type) {
+      $Message({
+        content: content,
+        type: type
+      })
     }
   }
 })
