@@ -107,7 +107,7 @@
       }
     },
     onShow () {
-      console.log(this.$route.query.goodsIds)
+      console.log(this.$route.query.cartsIds)
       this.getDefaultAddress()
       // wx.removeStorageSync('addressData')
     },

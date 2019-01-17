@@ -6,7 +6,7 @@
           <div class="recommend-item" v-for="(item,index) in goodsList" :key="index"
                v-on:click="toDetail(item)">
             <div class="goods-image">
-              <img :src="item.img_list" alt="">
+              <img :src="item.img" alt="">
             </div>
             <div class="goods-info">
               <div class="goods-name">{{item.name}}</div>
@@ -33,7 +33,7 @@
 
 <script>
   export default {
-    name: 'goodsList',
+    name: 'collectList',
     data () {
       return {
         Y: true,
@@ -50,9 +50,6 @@
       this.pageSize = 6
       this.goodsList = []
       this.getGoodsList()
-      wx.setNavigationBarTitle({
-        title: this.$route.query.title
-      })
     },
     methods: {
       loadMore () {
@@ -66,10 +63,10 @@
       getGoodsList () {
         const obj = {
           page: this.page,
-          pageSize: this.pageSize,
-          goodsType: parseInt(this.$route.query.goodsListId)
+          pageSize: this.pageSize
+          // goodsType: parseInt(this.$route.query.goodsListId)
         }
-        this.$ajax.getGoodsList(obj).then((res) => {
+        this.$ajax.getCollectList(obj).then((res) => {
           if (res.code === 0) {
             if (this.goodsList.length === 0 && res.data.length < 1) {
               // 没有数据
@@ -108,15 +105,6 @@
 
 <style scoped lang="scss">
   @import "../../_sass/reset";
-
-  // 加载更多与空数据
-  .no-more,
-  .nothing {
-    font-size: $fontB;
-    color: $color-theme-font;
-    text-align: center;
-  }
-
   .classify-scroll-view {
     height: 100%;
   }

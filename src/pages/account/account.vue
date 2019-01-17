@@ -44,7 +44,7 @@
         <div class="center-list-icon">
           <i-icon type="createtask" size="28" color="#80848f"/>
         </div>
-        <div class="center-list-type">
+        <div class="center-list-type" @click="toCollectList">
           <div class="text">我的收藏</div>
           <div class="icon">
             <i-icon type="enter"/>
@@ -111,6 +111,11 @@
       toAddressList () {
         wx.navigateTo({
           url: '/pages/address/addressList'
+        })
+      },
+      toCollectList () {
+        wx.navigateTo({
+          url: '/pages/account/collectList'
         })
       }
     }

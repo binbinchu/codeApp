@@ -9,6 +9,10 @@ export default {
   getUserInfo (data, config) {
     return _fly.post(`User.getUserInfo`, data, config)
   },
+  // 我的收藏列表
+  getCollectList (data, config) {
+    return _fly.post('Collection.myCollect', data, config)
+  },
   // 添加收货地址
   addAddress (data, config) {
     return _fly.post(`Mall.createRecAddress`, data, config)

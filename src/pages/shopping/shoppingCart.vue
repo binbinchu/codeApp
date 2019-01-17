@@ -153,7 +153,7 @@
           path: '/pages/shopping/orderSure',
           query: {
             type: 'orderDetail',
-            goodsIds: this.deleteObj.deleteId
+            cartsIds: this.deleteObj.deleteId
           }
         })
         console.log('结算')

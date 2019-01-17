@@ -62,9 +62,14 @@
         </div>
         <div class="goods-info">
           <div class="goods-name">{{item.name}}</div>
-          <div class="goods-price">
-            <div class="rmb">¥</div>
-            <div class="price">{{item.price}}</div>
+          <div class="goods-price-sale">
+            <div class="goods-price">
+              <div class="rmb">¥</div>
+              <div class="price">{{item.price}}</div>
+            </div>
+            <div class="goods-sale">
+              已售{{item.sales}}&nbsp;/件
+            </div>
           </div>
         </div>
       </div>
@@ -322,19 +327,30 @@
         word-break: break-all;
         height: rpx(70);
       }
-      .goods-price {
+      .goods-price-sale {
         display: flex;
-        justify-content: left;
-        align-items: flex-end;
-        align-content: flex-end;
-        color: #ed3f14;
-      }
-      .rmb {
-        font-size: rpx(22);
-      }
-      .price {
-        margin-left: rpx(5);
-        font-size: rpx(26);
+        align-content: center;
+        align-items: center;
+        justify-content: space-between;
+        .goods-price {
+          display: flex;
+          justify-content: left;
+          align-items: flex-end;
+          align-content: flex-end;
+          color: #ed3f14;
+        }
+        .rmb {
+          font-size: rpx(22);
+        }
+        .price {
+          margin-top: rpx(0);
+          margin-left: rpx(5);
+          font-size: rpx(26);
+        }
+        .goods-sale {
+          color: $colorI;
+          font-size: $fontC;
+        }
       }
     }
   }
