@@ -38,6 +38,19 @@
     display: block;
   }
 
+  // 加载更多与空数据
+  .no-more,
+  .nothing {
+    font-size: $fontB;
+    color: $color-theme-font;
+    text-align: center;
+    padding: rpx(30) 0;
+  }
+
+  .set-divider {
+
+  }
+
   // 价格 组合css
   .price {
     display: flex;
@@ -78,6 +91,7 @@
       background: #FF0000 !important;
     }
   }
+
   .action-btn {
     &.shopping-cart-btn {
       color: #ffffff !important;

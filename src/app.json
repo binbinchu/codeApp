@@ -43,6 +43,12 @@
       }
     },
     {
+      "path": "pages/account/collectList",
+      "config": {
+        "navigationBarTitleText": "我的收藏"
+      }
+    },
+    {
       "path": "pages/address/addressList",
       "config": {
         "navigationBarTitleText": "地址管理"

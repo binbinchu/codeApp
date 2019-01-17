@@ -58,13 +58,18 @@
     <div class="section shopping-div recommend">
       <div class="recommend-item" v-for="(item,index) in hotGoodsData" :key="index" v-on:click="toDetail(item)">
         <div class="goods-image">
-          <img :src="item.img_list" alt="">
+          <img :src="item.img" alt="">
         </div>
         <div class="goods-info">
           <div class="goods-name">{{item.name}}</div>
-          <div class="goods-price">
-            <div class="rmb">¥</div>
-            <div class="price">{{item.price}}</div>
+          <div class="goods-price-sale">
+            <div class="goods-price">
+              <div class="rmb">¥</div>
+              <div class="price">{{item.price}}</div>
+            </div>
+            <div class="goods-sale">
+              已售{{item.sales}}&nbsp;/件
+            </div>
           </div>
         </div>
       </div>
@@ -73,6 +78,8 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
+
   export default {
     data () {
       return {
@@ -95,15 +102,21 @@
 
     components: {},
     created () {
+      // this.getBanner()
+      // this.getHotGoods()
+      // this.getIndexMenu()
+    },
+    onShow () {
       this.getBanner()
       this.getHotGoods()
       this.getIndexMenu()
-    },
-    onShow () {
       if (this.isTokenTimeOut()) {
         console.log('token登录失效')
+<<<<<<< HEAD
       } else {
         console.log(wx.getStorageSync('userInfo'))
+=======
+>>>>>>> fcb6c1b6a90be148446fec3418d7d907b4c86269
       }
     },
     methods: {
@@ -320,19 +333,30 @@
         word-break: break-all;
         height: rpx(70);
       }
-      .goods-price {
+      .goods-price-sale {
         display: flex;
-        justify-content: left;
-        align-items: flex-end;
-        align-content: flex-end;
-        color: #ed3f14;
-      }
-      .rmb {
-        font-size: rpx(22);
-      }
-      .price {
-        margin-left: rpx(5);
-        font-size: rpx(26);
+        align-content: center;
+        align-items: center;
+        justify-content: space-between;
+        .goods-price {
+          display: flex;
+          justify-content: left;
+          align-items: flex-end;
+          align-content: flex-end;
+          color: #ed3f14;
+        }
+        .rmb {
+          font-size: rpx(22);
+        }
+        .price {
+          margin-top: rpx(0);
+          margin-left: rpx(5);
+          font-size: rpx(26);
+        }
+        .goods-sale {
+          color: $colorI;
+          font-size: $fontC;
+        }
       }
     }
   }

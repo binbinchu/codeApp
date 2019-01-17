@@ -177,7 +177,7 @@
       },
       getLike () {
         const obj = {
-          goods_id: this.$route.query.goodsId
+          obj_id: this.$route.query.goodsId
         }
         this.$ajax.isLikeApi(obj).then((res) => {
           if (res.code === 0) {
@@ -215,7 +215,8 @@
       Buy () {
         console.log('立即购买')
         this.$router.push({
-          path: '/pages/shopping/orderSure'
+          path: '/pages/shopping/orderSure',
+          query: { goodsIds: this.$route.query.goodsId }
         })
       },
       goodsCount (e) {

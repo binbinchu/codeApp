@@ -24,5 +24,9 @@ export default {
   // 判断商品收藏状态
   isLikeApi (data, config) {
     return _fly.post(`Collection.judgeCollect`, data, config)
+  },
+  // 商品订单获取默认地址
+  getDefaultAddress (data, config) {
+    return _fly.post(`Mall.getDefAddress`, data, config)
   }
 }

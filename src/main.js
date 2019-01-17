@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
 import Vue from 'vue'
 import MpvueRouterPatch from 'mpvue-router-patch'
 import App from '@/App'
 import store from '@/store'
 import $ajax from './ajax'
 import _ from 'lodash'
+import { $Toast, $Message } from '../static/iview/base/index'
 
 Vue.use(MpvueRouterPatch)
 Vue.prototype.$ajax = $ajax
@@ -15,6 +17,13 @@ Vue.mixin({
     return {
       authToken: '',
       userInfo: {}
+    }
+  },
+  onPullDownRefresh () {
+    let path = getCurrentPages()
+    if (path.length !== 0) {
+      // 刷新当前页面的数据
+      this.$mp.page.onShow()
     }
   },
   methods: {
@@ -82,6 +91,18 @@ Vue.mixin({
       // 去重
       let x = new Set(arr)
       return [...x]
+    },
+    toast (content, type) {
+      $Toast({
+        content: content,
+        type: type
+      })
+    },
+    message (content, type) {
+      $Message({
+        content: content,
+        type: type
+      })
     }
   }
 })
