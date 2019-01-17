@@ -67,6 +67,12 @@
       "path": "pages/classify/goodsList"
     },
     {
+      "path": "pages/account/distribution",
+      "config": {
+        "navigationBarTitleText": "分享中心"
+      }
+    },
+    {
       "path": "packageA/logs",
       "subPackage": true
     }

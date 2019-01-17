@@ -1,6 +1,6 @@
 <template>
-  <div class="account">
-    <div class="div user-center">
+  <div class="dis-page">
+    <div class="user">
       <div class="user-info-box">
         <div class="user-info-image">
           <img :src="userInfo.headimgurl" alt="">
@@ -13,63 +13,24 @@
         </div>
       </div>
     </div>
-    <div class="div order-control">
-      <div class="control-item">
-        <div class="item-icon">
-          <i-icon type="createtask" size="28" color="#80848f"/>
-        </div>
-        <div class="item-type">待付款</div>
-      </div>
-      <div class="control-item">
-        <div class="item-icon">
-          <i-icon type="createtask" size="28" color="#80848f"/>
-        </div>
-        <div class="item-type">待发货</div>
-      </div>
-      <div class="control-item">
-        <div class="item-icon">
-          <i-icon type="createtask" size="28" color="#80848f"/>
-        </div>
-        <div class="item-type">待收货</div>
-      </div>
-      <div class="control-item">
-        <div class="item-icon">
-          <i-icon type="createtask" size="28" color="#80848f"/>
-        </div>
-        <div class="item-type">待评价</div>
-      </div>
-    </div>
-    <div class="div center-list">
-      <div class="list-item">
-        <div class="center-list-icon">
-          <i-icon type="createtask" size="28" color="#80848f"/>
-        </div>
-        <div class="center-list-type">
-          <div class="text">我的收藏</div>
+    <div class="content">
+      <div class="content-list">
+        <div class="list-item the-one">
           <div class="icon">
-            <i-icon type="enter"/>
+            <img src="../../../static/common/my/money.png" alt="">
+          </div>
+          <div class="my-content">
+            <p class="my-content-dec">我的伙伴</p>
+            <p class="my-content-num"><span>{{myParentNum}}</span>人</p>
           </div>
         </div>
-      </div>
-      <div class="list-item">
-        <div class="center-list-icon">
-          <i-icon type="coordinates" size="28" color="#80848f"/>
-        </div>
-        <div class="center-list-type" @click="toAddressList">
-          <div class="text">我的地址</div>
+        <div class="list-item">
           <div class="icon">
-            <i-icon type="enter"/>
+            <img src="../../../static/common/my/my-parent.png" alt="">
           </div>
-        </div>
-      </div>
-      <div class="list-item">
-        <div class="center-list-icon">
-          <i-icon type="coordinates" size="28" color="#80848f"/>
-        </div>
-        <div class="center-list-type" @click="toDistribution">
-          <div class="text">我的分销</div>
-          <div class="icon">
-            <i-icon type="distribution"/>
+          <div class="my-content">
+            <p class="my-content-dec">已获得奖励</p>
+            <p class="my-content-num"><span>{{myMoney}}</span>元</p>
           </div>
         </div>
       </div>
@@ -82,14 +43,18 @@
     name: 'account',
     data () {
       return {
-        userInfo: {}
+        // 用户信息
+        userInfo: {},
+        // 用户获取的返利的总钱数
+        myMoney: 0,
+        // 用户的下级
+        myParentNum: 0
       }
     },
     onLoad () {
-      console.log('This is Onload')
+
     },
     onShow () {
-      console.log('This is Onshow')
       if (wx.getStorageSync('token')) {
         if (!wx.getStorageSync('userInfo')) {
           this.getUserInfoFn()
@@ -120,16 +85,6 @@
             this.userInfo = res.data
           }
         })
-      },
-      toAddressList () {
-        wx.navigateTo({
-          url: '/pages/address/addressList'
-        })
-      },
-      toDistribution () {
-        wx.navigateTo({
-          url: '/pages/account/distribution'
-        })
       }
     }
   }
@@ -138,16 +93,14 @@
 <style scoped lang="scss">
   @import "../../_sass/reset";
 
-  .div {
-    background: $colorM;
-    padding: rpx(15);
+  .dis-page {
+    background: $colorL;
+    /*padding: rpx(15);*/
   }
-
-  .user-center {
+  .user {
     background: $colorM;
     .user-info-box {
       background-image: linear-gradient(90deg, #ED240D 0%, #F56A2B 100%);
-      border-radius: rpx(12);
       box-shadow: 0 rpx(4) rpx(8) rgba(228, 57, 60, .4);
       height: rpx(225);
       padding: rpx(25);
@@ -168,16 +121,67 @@
       }
     }
     .user-info {
-      margin-left: rpx(15);
+      margin-left: rpx(20);
       .user-name {
-        font-size: $fontB;
+        font-size: $fontM;
         color: rgba(255, 255, 255, 0.7);
+        margin-top: rpx(40);
       }
       .user-info-content {
         height: rpx(36);
         width: rpx(225);
       }
     }
+  }
+
+  .content{
+    background: $colorM;
+    margin-top: rpx(40);
+    .content-list{
+      padding: rpx(20);
+      display: flex;
+
+      .list-item{
+        flex-wrap: wrap;
+        width: 50%;
+        /*margin-bottom: rpx(15);*/
+        margin-left: rpx(30);
+        display: flex;
+        .icon{
+          width: rpx(96);
+          height: rpx(96);
+          padding-top: rpx(20);
+          image {
+            width: 100%;
+            height: 100%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+          }
+        }
+        .my-content{
+          flex: 1;
+          margin-left: rpx(20);
+          padding-top: rpx(20);
+          .my-content-dec{
+            font-size:$fontA;
+            font-weight: bold;
+          }
+          .my-content-num{
+            font-size:$fontA;
+            font-weight: bold;
+            span{
+              color:red;
+            }
+          }
+        }
+      }
+      // special
+      .the-one{
+        border-right: 1px solid $colorH;
+      }
+    }
+
   }
 
   .order-control {
