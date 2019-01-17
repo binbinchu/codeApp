@@ -1,17 +1,29 @@
 <template>
   <div class="order-sure">
-    <div class="div address">
-      <div class="address-info">
-        <div class="user-name-phone">
-          <b>ChuBinBin&nbsp;18463165732</b>
+    <div class="div address" @click="chooseAddress">
+      <block v-if="addressData">
+        <div class="address-info">
+          <div class="user-name-phone">
+            <b>{{addressData.name}}&nbsp;{{addressData.tel}}</b>
+          </div>
+          <div class="user-address">
+            {{addressData.detAddress}}
+          </div>
         </div>
-        <div class="user-address">
-          北京市海淀区五环到六环之间永泰庄6号院4号楼
+        <div class="row">
+          <i-icon type="enter"/>
         </div>
-      </div>
-      <div class="row">
-        <i-icon type="enter"/>
-      </div>
+      </block>
+      <block v-else>
+        <div class="add-address-icon">
+          <div class="add-icon">
+            <i-icon type="add" size="24"/>
+          </div>
+          <div class="add-text">
+            请选择收货地址
+          </div>
+        </div>
+      </block>
     </div>
     <div class="line-img"></div>
     <div class="div goods-list">
@@ -90,16 +102,31 @@
   export default {
     name: 'orderSure',
     data () {
-      return {}
+      return {
+        addressData: null
+      }
     },
     onShow () {
       console.log(this.$route.query.goodsIds)
       this.getDefaultAddress()
+      // wx.removeStorageSync('addressData')
     },
     methods: {
       getDefaultAddress () {
-        this.$ajax.getDefaultAddress().then((res) => {
-          console.log(res)
+        if (wx.getStorageSync('addressData')) {
+          this.addressData = JSON.parse(wx.getStorageSync('addressData'))
+          this.addressData.detAddress = this.addressData.area + this.addressData.address
+        } else {
+          this.$ajax.getDefaultAddress().then((res) => {
+            if (res.code === 0) {
+              this.addressData = res.data
+            }
+          })
+        }
+      },
+      chooseAddress () {
+        this.$router.push({
+          path: '/pages/address/addressList'
         })
       }
     }
@@ -144,6 +171,17 @@
     }
     .user-address {
       font-size: $fontL;
+    }
+    .add-address-icon {
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: left;
+    }
+    .add-icon {
+    }
+    .add-text {
+      font-size: $fontB;
     }
   }
 

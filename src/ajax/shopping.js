@@ -27,6 +27,6 @@ export default {
   },
   // 商品订单获取默认地址
   getDefaultAddress (data, config) {
-    return _fly.post(`Mall.getRecInfo`, data, config)
+    return _fly.post(`Mall.getDefAddress`, data, config)
   }
 }

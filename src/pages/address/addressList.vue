@@ -58,16 +58,25 @@
           index: null
         },
         /* v-modal */
-        addressList: []
+        addressList: [],
+        path: []
       }
     },
     components: { vModal },
     onShow () {
       this.getAddressList()
+      // eslint-disable-next-line no-undef
+      this.path = getCurrentPages()
     },
     methods: {
       chooseAddress (item) {
-        console.log(item)
+        console.log(this.path[this.path.length - 2])
+        if (this.path[this.path.length - 2].route === 'pages/shopping/orderSure') {
+          wx.setStorageSync('addressData', JSON.stringify(item))
+          wx.navigateBack({
+            delta: 1
+          })
+        }
       },
       toAddAddress () {
         this.$router.push({
@@ -111,7 +120,7 @@
               _item.default = '01'
             })
             this.addressList[index].default = '02'
-            this.message('已设置未默认地址', 'success')
+            this.message('已设置为默认地址', 'success')
           }
         })
       },
