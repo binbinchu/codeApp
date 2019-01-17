@@ -78,6 +78,8 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
+
   export default {
     data () {
       return {
@@ -100,17 +102,18 @@
 
     components: {},
     created () {
-      this.getBanner()
-      this.getHotGoods()
-      this.getIndexMenu()
+      // this.getBanner()
+      // this.getHotGoods()
+      // this.getIndexMenu()
     },
     mounted () {
     },
     onShow () {
+      this.getBanner()
+      this.getHotGoods()
+      this.getIndexMenu()
       if (this.isTokenTimeOut()) {
         console.log('token登录失效')
-      } else {
-        // console.log(wx.getStorageSync('userInfo'))
       }
     },
     methods: {

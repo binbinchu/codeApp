@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import Vue from 'vue'
 import MpvueRouterPatch from 'mpvue-router-patch'
 import App from '@/App'
@@ -16,6 +17,13 @@ Vue.mixin({
     return {
       authToken: '',
       userInfo: {}
+    }
+  },
+  onPullDownRefresh () {
+    let path = getCurrentPages()
+    if (path.length !== 0) {
+      // 刷新当前页面的数据
+      this.$mp.page.onShow()
     }
   },
   methods: {
