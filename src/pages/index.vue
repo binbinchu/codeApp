@@ -201,11 +201,11 @@
     flex-wrap: wrap;
     padding: rpx(10);
     .tags-item {
-      width: rpx(100);
-      padding: rpx(15);
+      width: rpx(90);
+      padding: rpx(25);
       .tags-image {
-        width: rpx(100);
-        height: rpx(100);
+        width: rpx(90);
+        height: rpx(90);
         image {
           width: 100%;
           height: 100%;
@@ -215,7 +215,7 @@
       .tags-name {
         width: rpx(100);
         margin-top: rpx(15);
-        font-size: rpx(26);
+        font-size: $fontB;
         text-align: center;
       }
     }
