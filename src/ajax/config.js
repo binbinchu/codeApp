@@ -57,6 +57,7 @@ fly.interceptors.request.use((request) => {
 fly.interceptors.response.use(
   (response) => {
     wx.hideLoading()
+    wx.stopPullDownRefresh()
     return response.data// 请求成功之后将返回值返回
   },
   (err) => {
