@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
+  <div class="container">
     <div class="search">
       <i-input type="text" left title="搜索" mode="wrapped" i-class="index-inputStyle" disabled="true"
                v-on:click="toSearch"/>
@@ -18,7 +18,7 @@
       </swiper>
     </div>
     <div class="index-menu-tags radiusBox">
-      <div class="tags-item" v-for="(item,index) in tagsMenu" :key="index">
+      <div class="tags-item" v-for="(item,index) in tagsMenu" :key="index" @click="toList(item)">
         <div class="tags-image">
           <img :src="item.img" alt="">
         </div>
