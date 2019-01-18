@@ -6,7 +6,7 @@
     <div class="cart-second">
       <ul class="cart-list">
         <li class="cart-list-item" v-for="(item,index) in goodsList" :key="index" @click.stop="toDetail(item)">
-          <i-swipeout operateWidth="75" :toggle="item.toggleFlag">
+          <i-swipeout operateWidth="75" :toggle="item.toggleFlag" i-class="shoppingCart-swipeout">
             <div slot="content">
               <div class="goods-info">
                 <div class="select" :class="{'active':item.selected}" v-on:click.stop="selectedFn(item)"></div>
@@ -20,13 +20,13 @@
                       <div class="symbol">￥</div>
                       <div class="number">{{item.piece}}</div>
                     </div>
-                    <div class="goods-num">
-                      <div class="chooseView number">
-                        <!--<div class="title">数量</div>-->
-                        <div class="tab-item">
-                          <i-input-number :value="item.num" min="1" max="100" step="1" size="small"
-                                          @change.stop="goodsCount($event,item)"></i-input-number>
-                        </div>
+                  </div>
+                  <div class="goods-num">
+                    <div class="chooseView number">
+                      <!--<div class="title">数量</div>-->
+                      <div class="tab-item">
+                        <i-input-number :value="item.num" min="1" max="100" step="1" size="small"
+                                        @change.stop="goodsCount($event,item)"></i-input-number>
                       </div>
                     </div>
                   </div>
@@ -265,6 +265,12 @@
     }
   }
 </script>
+<style lang="scss">
+  @import "../../_sass/reset";
+  .shoppingCart-swipeout{
+    width: 100%;
+  }
+</style>
 <style scoped lang="scss">
   @import "../../_sass/reset";
 
@@ -308,7 +314,9 @@
   }
 
   .cart-second {
+    width: 100%;
     padding-bottom: rpx(98);
+    overflow: hidden;
     .goods-info {
       display: flex;
       align-items: center;
@@ -350,18 +358,20 @@
         font-size: rpx(26);
         padding-top: rpx(10)
       }
-
-      .goods-num {
-        width: 90%;
-        flex: 0;
-        padding-top: rpx(15);
-        .chooseView {
-          display: flex;
-          align-items: center;
-          align-content: center;
-          justify-content: space-between;
-          padding: rpx(0) rpx(15) rpx(0) rpx(15);
-        }
+    }
+    .goods-num {
+      display: flex;
+      justify-content: right;
+      flex-direction: row-reverse;
+      width: 100%;
+      flex: 0;
+      padding-top: rpx(15);
+      .chooseView {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+        padding: rpx(0) rpx(15) rpx(0) rpx(15);
       }
     }
     .cart-list-item {
@@ -369,6 +379,7 @@
       justify-content: left;
       align-items: center;
       align-content: center;
+      width: 100%;
     }
     .cart-list-item-delete {
       height: 100%;
