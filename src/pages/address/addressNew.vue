@@ -28,7 +28,7 @@
         <button form-type="submit">确认</button>
       </div>
     </form>
-    <i-action-sheet :visible="visible">
+    <i-action-sheet :visible="visible" @click.stop="addArea(1)">
       <div slot="header">
         <picker-view
           indicator-style="height: 50px;"

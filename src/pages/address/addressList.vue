@@ -189,6 +189,10 @@
               background: rgba(255, 84, 0, 0.5);
               color: $colorB;
               padding: rpx(2) rpx(5);
+              -webkit-border-radius: rpx(4);
+              -moz-border-radius: rpx(4);
+              border-radius: rpx(4);
+              margin-right: rpx(20);
             }
             .addressInfo {
               width: rpx(525);
