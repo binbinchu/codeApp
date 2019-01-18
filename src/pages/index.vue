@@ -112,11 +112,8 @@
       this.getIndexMenu()
       if (this.isTokenTimeOut()) {
         console.log('token登录失效')
-<<<<<<< HEAD
       } else {
         console.log(wx.getStorageSync('userInfo'))
-=======
->>>>>>> fcb6c1b6a90be148446fec3418d7d907b4c86269
       }
     },
     methods: {
