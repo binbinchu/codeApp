@@ -44,7 +44,7 @@
         <div class="center-list-icon">
           <i-icon type="createtask" size="28" color="#80848f"/>
         </div>
-        <div class="center-list-type" @click="toCollectList">
+        <div class="center-list-type">
           <div class="text">我的收藏</div>
           <div class="icon">
             <i-icon type="enter"/>
@@ -62,6 +62,17 @@
           </div>
         </div>
       </div>
+      <div class="list-item">
+        <div class="center-list-icon">
+          <i-icon type="coordinates" size="28" color="#80848f"/>
+        </div>
+        <div class="center-list-type" @click="toDistribution">
+          <div class="text">我的分销</div>
+          <div class="icon">
+            <i-icon type="distribution"/>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -75,8 +86,10 @@
       }
     },
     onLoad () {
+      console.log('This is Onload')
     },
     onShow () {
+      console.log('This is Onshow')
       if (wx.getStorageSync('token')) {
         if (!wx.getStorageSync('userInfo')) {
           this.getUserInfoFn()
@@ -113,9 +126,9 @@
           url: '/pages/address/addressList'
         })
       },
-      toCollectList () {
+      toDistribution () {
         wx.navigateTo({
-          url: '/pages/account/collectList'
+          url: '/pages/account/distribution'
         })
       }
     }
