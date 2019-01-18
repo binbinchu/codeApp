@@ -101,20 +101,10 @@
     },
 
     components: {},
-    created () {
-      // this.getBanner()
-      // this.getHotGoods()
-      // this.getIndexMenu()
-    },
     onShow () {
       this.getBanner()
       this.getHotGoods()
       this.getIndexMenu()
-      if (this.isTokenTimeOut()) {
-        console.log('token登录失效')
-      } else {
-        console.log(wx.getStorageSync('userInfo'))
-      }
     },
     methods: {
       toSearch () {
@@ -158,10 +148,6 @@
             this.tagsMenu = res.data
           }
         })
-      },
-      clickHandle (msg, ev) {
-        // eslint-disable-next-line
-        console.log('clickHandle:', msg, ev)
       }
     }
   }

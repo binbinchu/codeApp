@@ -35,7 +35,6 @@ Vue.mixin({
             success () {
               const obj = {
                 code: res.code,
-                // code: '081sMK240CLaHK1ybo140gso240sMK2Y',
                 iv: data.iv,
                 encryptedData: data.encryptedData,
                 recommendId: ''
@@ -45,9 +44,6 @@ Vue.mixin({
                   let createTime = new Date()
                   wx.setStorageSync('createdTime', createTime)
                   wx.setStorageSync('token', res.data)
-                  // wx.navigateBack({
-                  //   delta: 1
-                  // })
                   wx.switchTab({
                     url: `/pages/account/account`
                   })

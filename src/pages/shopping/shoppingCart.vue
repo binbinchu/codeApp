@@ -33,7 +33,7 @@
                 </div>
               </div>
             </div>
-            <div slot="button" class="cart-list-item-delete" v-on:click.stop="actionsTap(item,index)">
+            <div slot="button" class="cart-list-item-delete" v-on:click.stop="actionsTap(0,item,index)">
               <div>
                 删除
               </div>
@@ -57,7 +57,7 @@
           <div class="select" :class="{'active':allSelect}" v-on:click.stop="allSelectFn"></div>
           <div class="price-num">全选</div>
         </div>
-        <div class="cart-btn" v-on:click="allDelete">
+        <div class="cart-btn" v-on:click="actionsTap(1)">
           删除({{selectedList.length}})
         </div>
       </template>
@@ -81,6 +81,8 @@
         visible: false,
         unclosable: true,
         toggleFlag: false,
+        // 0 单独删除 1批量删除
+        deleteType: 0,
         index: 0,
         goodsList: [],
         selectedList: [],
@@ -126,9 +128,6 @@
         })
         this.deleteObj.deleteId = this.selectId.join(',')
       }
-      // 'deleteObj.deleteId' (val) {
-      //   console.log(val)
-      // }
     },
     onShow () {
       this.loadShoppingCart()
@@ -156,14 +155,12 @@
             cartsIds: this.deleteObj.deleteId
           }
         })
-        console.log('结算')
-      },
-      allDelete () {
-        console.log('删除')
       },
       deleteLoad () {
         this.visible = false
-        this.goodsList[this.deleteObj.index].toggleFlag = true
+        if (this.deleteType === 0) {
+          this.goodsList[this.deleteObj.index].toggleFlag = true
+        }
         let obj = {
           id: this.deleteObj.deleteId
         }
@@ -173,7 +170,17 @@
               content: '删除成功',
               type: 'success'
             })
-            this.goodsList.splice(this.deleteObj.index, 1)
+            if (this.deleteType === 0) {
+              this.goodsList.splice(this.deleteObj.index, 1)
+            } else {
+              this.selectedList.forEach((item, index) => {
+                this.goodsList.forEach((_item, _index) => {
+                  if (item.id === _item.id) {
+                    this.goodsList.splice(_index, 1)
+                  }
+                })
+              })
+            }
           } else {
             $Message({
               content: '删除失败',
@@ -183,12 +190,17 @@
         })
       },
       handleClickCancel () {
-        this.goodsList[this.deleteObj.index].toggleFlag = true
+        if (this.deleteType === 0) {
+          this.goodsList[this.deleteObj.index].toggleFlag = true
+        }
         this.visible = false
       },
-      actionsTap (item, index) {
-        this.deleteObj.deleteId = item.id
-        this.deleteObj.index = index
+      actionsTap (type, item, index) {
+        this.deleteType = type
+        if (this.deleteType === 0) {
+          this.deleteObj.deleteId = item.id
+          this.deleteObj.index = index
+        }
         this.modalOption = {}
         this.actions = []
         this.modalOption = Object.assign({}, this.modalOption, {
@@ -267,7 +279,8 @@
 </script>
 <style lang="scss">
   @import "../../_sass/reset";
-  .shoppingCart-swipeout{
+
+  .shoppingCart-swipeout {
     width: 100%;
   }
 </style>
