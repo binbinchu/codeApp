@@ -28,5 +28,13 @@ export default {
   // 商品订单获取默认地址
   getDefaultAddress (data, config) {
     return _fly.post(`Mall.getDefAddress`, data, config)
+  },
+  // 生成订单
+  createdOrder (data, config) {
+    return _fly.post(`GoodsOrder.batchGenerateGoodsOrder`, data, config)
+  },
+  // 订单详情
+  getOrderDetail (data, config) {
+    return _fly.post(`GoodsOrder.getBatchOrderDetail`, data, config)
   }
 }

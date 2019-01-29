@@ -92,7 +92,7 @@
         <div class="price">+&nbsp;¥10</div>
       </div>
       <div class="orderSure-btn-group">
-        <i-button type="info" i-class="orderSure-pay-btn">在线支付</i-button>
+        <i-button type="info" i-class="orderSure-pay-btn" v-on:click="orderPay">在线支付</i-button>
       </div>
     </div>
   </div>
@@ -103,10 +103,13 @@
     name: 'orderSure',
     data () {
       return {
-        addressData: null
+        addressData: null,
+        shop_id: '',
+        orderId: ''
       }
     },
     onShow () {
+      this.shop_id = this.$route.query.cartsIds
       console.log(this.$route.query.cartsIds)
       this.getDefaultAddress()
       // wx.removeStorageSync('addressData')
@@ -116,18 +119,43 @@
         if (wx.getStorageSync('addressData')) {
           this.addressData = JSON.parse(wx.getStorageSync('addressData'))
           this.addressData.detAddress = this.addressData.area + this.addressData.address
+          this.createdOrder(this.addressData.id)
         } else {
           this.$ajax.getDefaultAddress().then((res) => {
             if (res.code === 0) {
               this.addressData = res.data
+              this.createdOrder(this.addressData.id)
             }
           })
         }
+      },
+      getOrderDetail (orderId) {
+        const obj = {
+          id: orderId
+        }
+        this.$ajax.getOrderDetail(obj).then((res) => {
+          console.log(res)
+        })
+      },
+      createdOrder (addressId) {
+        const obj = {
+          shop_id: this.shop_id,
+          address_id: addressId
+        }
+        this.$ajax.createdOrder(obj).then((res) => {
+          if (res.code === 0) {
+            this.orderId = res.data
+            this.getOrderDetail(this.orderId)
+          }
+        })
       },
       chooseAddress () {
         this.$router.push({
           path: '/pages/address/addressList'
         })
+      },
+      orderPay () {
+        console.log('生成订单')
       }
     }
   }

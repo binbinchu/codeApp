@@ -70,7 +70,7 @@
         <div class="text">购物车</div>
       </div>
       <i-button shape="circle" i-class="BTN shopping-cart-btn" v-on:click="addCart">加入购物车</i-button>
-      <i-button type="error" shape="circle" i-class="BTN buy-btn" v-on:click="Buy">立即购买</i-button>
+      <i-button type="error" shape="circle" i-class="BTN buy-btn" v-on:click="handleOpen">立即购买</i-button>
     </div>
     <i-action-sheet :visible="visible">
       <div slot="header" class="tip-content">
@@ -99,7 +99,7 @@
         </div>
         <div class="goods-btn">
           <i-button i-class="action-btn shopping-cart-btn" v-on:click="addCart">加入购物车</i-button>
-          <i-button i-class="action-btn buy-btn">立即购买</i-button>
+          <i-button i-class="action-btn buy-btn" v-on:click="Buy">立即购买</i-button>
         </div>
       </div>
     </i-action-sheet>
@@ -213,10 +213,9 @@
         })
       },
       Buy () {
-        console.log('立即购买')
         this.$router.push({
           path: '/pages/shopping/orderSure',
-          query: { goodsIds: this.$route.query.goodsId }
+          query: { cartsIds: this.$route.query.goodsId }
         })
       },
       goodsCount (e) {
