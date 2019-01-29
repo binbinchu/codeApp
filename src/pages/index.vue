@@ -160,6 +160,7 @@
     background-color: rgba(255, 255, 255, 0.7) !important;
     padding-top: rpx(0) !important;
     padding-bottom: rpx(0) !important;
+    border: none !important;
   }
 </style>
 <style scoped lang="scss">
