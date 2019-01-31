@@ -27,56 +27,21 @@
     </div>
     <div class="line-img"></div>
     <div class="div goods-list">
-      <div class="goods-list-item">
+      <div class="goods-list-item" v-for="(item,index) in goodsList" :key="index">
         <div class="goods-list-item-image">
-          <img src="http://pic2.ooopic.com/12/62/89/46bOOOPICa6_1024.jpg" alt="">
+          <img :src="item.img" alt="">
         </div>
         <div class="goods-list-item-info">
           <div class="goods-name">
-            南极人Nanjiren 加厚亲赴柔软保暖冬被担任双人被子被芯棉被 米黄色 180cm x 200cm南极人Nanjiren 加厚亲赴柔软保暖冬被担任双人被子被芯棉被 米黄色 180cm x 200cm
+            {{item.name}}
           </div>
           <div class="goods-specification">
-            2.130kg/件，米黄，180*200 4斤
+            <!--2.130kg/件，米黄，180*200 4斤-->
+            {{item.stateNacme}}
           </div>
           <div class="goods-price-num">
             <div class="goods-price">
-              ¥1000.00
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="goods-list-item">
-        <div class="goods-list-item-image">
-          <img src="http://pic2.ooopic.com/12/62/89/46bOOOPICa6_1024.jpg" alt="">
-        </div>
-        <div class="goods-list-item-info">
-          <div class="goods-name">
-            南极人Nanjiren 加厚亲赴柔软保暖冬被担任双人被子被芯棉被 米黄色 180cm x 200cm南极人Nanjiren 加厚亲赴柔软保暖冬被担任双人被子被芯棉被 米黄色 180cm x 200cm
-          </div>
-          <div class="goods-specification">
-            2.130kg/件，米黄，180*200 4斤
-          </div>
-          <div class="goods-price-num">
-            <div class="goods-price">
-              ¥1000.00
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="goods-list-item">
-        <div class="goods-list-item-image">
-          <img src="http://pic2.ooopic.com/12/62/89/46bOOOPICa6_1024.jpg" alt="">
-        </div>
-        <div class="goods-list-item-info">
-          <div class="goods-name">
-            南极人Nanjiren 加厚亲赴柔软保暖冬被担任双人被子被芯棉被 米黄色 180cm x 200cm南极人Nanjiren 加厚亲赴柔软保暖冬被担任双人被子被芯棉被 米黄色 180cm x 200cm
-          </div>
-          <div class="goods-specification">
-            2.130kg/件，米黄，180*200 4斤
-          </div>
-          <div class="goods-price-num">
-            <div class="goods-price">
-              ¥1000.00
+              ¥{{item.price}}
             </div>
           </div>
         </div>
@@ -85,12 +50,12 @@
     <div class="div all-price-btn">
       <div class="all-price">
         <div class="title">商品金额</div>
-        <div class="price">¥3000.00</div>
+        <div class="price">¥{{total_price}}</div>
       </div>
-      <div class="all-price">
-        <div class="title">运费<label>(总重：2.820kg)</label></div>
-        <div class="price">+&nbsp;¥10</div>
-      </div>
+      <!--<div class="all-price">-->
+      <!--<div class="title">运费<label>(总重：2.820kg)</label></div>-->
+      <!--<div class="price">+&nbsp;¥10</div>-->
+      <!--</div>-->
       <div class="orderSure-btn-group">
         <i-button type="info" i-class="orderSure-pay-btn" v-on:click="orderPay">在线支付</i-button>
       </div>
@@ -105,7 +70,9 @@
       return {
         addressData: null,
         shop_id: '',
-        orderId: ''
+        orderId: '',
+        goodsList: [],
+        total_price: '0'
       }
     },
     onShow () {
@@ -134,7 +101,10 @@
           id: orderId
         }
         this.$ajax.getOrderDetail(obj).then((res) => {
-          console.log(res)
+          if (res.code === 0) {
+            this.goodsList = res.data.goodsInfo
+            this.total_price = res.data.total_price
+          }
         })
       },
       createdOrder (addressId) {
@@ -155,7 +125,25 @@
         })
       },
       orderPay () {
-        console.log('生成订单')
+        const obj = {
+          order_id: this.orderId
+        }
+        this.$ajax.getPayOrderData(obj).then((res) => {
+          if (res.code === 0) {
+            wx.requestPayment({
+              timeStamp: res.data.timestamp + '',
+              nonceStr: res.data.noncestr,
+              package: `prepay_id=${res.data.prepayid}`,
+              signType: 'MD5',
+              paySign: res.data.sign,
+              success () {
+                wx.redirectTo({
+                  url: '/pages/shopping/payResult'
+                })
+              }
+            })
+          }
+        })
       }
     }
   }

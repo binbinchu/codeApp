@@ -36,5 +36,9 @@ export default {
   // 订单详情
   getOrderDetail (data, config) {
     return _fly.post(`GoodsOrder.getBatchOrderDetail`, data, config)
+  },
+  // 订单支付-生成微信数据
+  getPayOrderData (data, config) {
+    return _fly.post(`GoodsOrder.batchPayGoodsOrder`, data, config)
   }
 }

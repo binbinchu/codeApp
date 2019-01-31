@@ -18,7 +18,7 @@
                   <div class="goods-price">
                     <div class="price new-price">
                       <div class="symbol">￥</div>
-                      <div class="number">{{item.piece}}</div>
+                      <div class="number">{{item.price}}</div>
                     </div>
                   </div>
                   <div class="goods-num">
@@ -114,7 +114,7 @@
       selectedNum () {
         let num = 0
         this.selectedList.forEach((item, index) => {
-          num += this.selectedList[index].piece * this.selectedList[index].num
+          num += this.selectedList[index].price * this.selectedList[index].num
         })
         this.allPrice = num
         return num

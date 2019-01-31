@@ -31,6 +31,12 @@
       }
     },
     {
+      "path": "pages/shopping/payResult",
+      "config": {
+        "navigationBarTitleText": "支付结果"
+      }
+    },
+    {
       "path": "pages/account/login",
       "config": {
         "navigationBarTitleText": "登录"
