@@ -27,6 +27,10 @@ Vue.mixin({
     }
   },
   methods: {
+    getCurrentPages () {
+      let currentPage = getCurrentPages()
+      return currentPage
+    },
     WxToLogin (data) {
       let that = this
       wx.login({

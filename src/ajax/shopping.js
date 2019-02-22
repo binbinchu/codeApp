@@ -33,6 +33,9 @@ export default {
   createdOrder (data, config) {
     return _fly.post(`GoodsOrder.batchGenerateGoodsOrder`, data, config)
   },
+  singleCreatedOrder (data, config) {
+    return _fly.post(`GoodsOrder.generateGoodsOrder`, data, config)
+  },
   // 订单详情
   getOrderDetail (data, config) {
     return _fly.post(`GoodsOrder.getBatchOrderDetail`, data, config)

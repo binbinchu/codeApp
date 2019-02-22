@@ -77,7 +77,7 @@
     },
     onShow () {
       this.shop_id = this.$route.query.cartsIds
-      console.log(this.$route.query.cartsIds)
+      console.log(this.getCurrentPages()[1].route)
       this.getDefaultAddress()
       // wx.removeStorageSync('addressData')
     },
@@ -86,12 +86,20 @@
         if (wx.getStorageSync('addressData')) {
           this.addressData = JSON.parse(wx.getStorageSync('addressData'))
           this.addressData.detAddress = this.addressData.area + this.addressData.address
-          this.createdOrder(this.addressData.id)
+          if (this.getCurrentPages()[1].route === 'pages/shopping/detail') {
+            this.singleCreated()
+          } else {
+            this.createdOrder(this.addressData.id)
+          }
         } else {
           this.$ajax.getDefaultAddress().then((res) => {
             if (res.code === 0) {
               this.addressData = res.data
-              this.createdOrder(this.addressData.id)
+              if (this.getCurrentPages()[1].route === 'pages/shopping/detail') {
+                this.singleCreated()
+              } else {
+                this.createdOrder(this.addressData.id)
+              }
             }
           })
         }
@@ -104,6 +112,22 @@
           if (res.code === 0) {
             this.goodsList = res.data.goodsInfo
             this.total_price = res.data.total_price
+          }
+        })
+      },
+      singleCreated () {
+        const obj = {
+          goods_id: this.$route.query.cartsIds,
+          number: this.$route.query.num,
+          address: this.addressData.detAddress,
+          consignee_name: this.addressData.name,
+          consignee_mobile: this.addressData.tel,
+          address_id: this.addressData.id
+        }
+        this.$ajax.singleCreatedOrder(obj).then((res) => {
+          if (res.code === 0) {
+            this.orderId = res.data
+            this.getOrderDetail(this.orderId)
           }
         })
       },

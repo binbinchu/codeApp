@@ -215,7 +215,10 @@
       Buy () {
         this.$router.push({
           path: '/pages/shopping/orderSure',
-          query: { cartsIds: this.$route.query.goodsId }
+          query: {
+            cartsIds: this.$route.query.goodsId,
+            num: this.count
+          }
         })
       },
       goodsCount (e) {
